@@ -55,7 +55,7 @@ const Navbar = () => {
 
         <div className=' text-primary text-base hover:cursor-pointer hover:text-white'>
           <Link to='intro' spy={true} smooth={true} duration={500} offset={-100}>
-          SHRIYAM
+          SLAYER
           </Link>
         </div>
 
@@ -100,7 +100,7 @@ const Navbar = () => {
 
                 <span className=' text-primary'>04.</span><span>Contact</span>
                 </Link></motion.li>
-            <a href='ShriyamResume.pdf' target="_blank"  >
+            <a href='UtkarshResume.pdf' target="_blank"  >
               <motion.li
                 initial={{ y: -10, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -119,7 +119,7 @@ const Navbar = () => {
       <motion.div animate={controls} transition={{duration:0.3}} className={`flex md:hidden font-mono justify-between text-base gap-8 fixed bg- p-10 h-16 w-full -mt-2 z-50 glassmorphism bg-navy ${window.pageYOffset < 100?null:'drop-shadow-2xl'} duration-1000`}>
       <div className=' text-primary text-base hover:cursor-pointer hover:text-white'>
           <Link to='intro' spy={true} smooth={true} duration={500} offset={-100}>
-          SHRIYAM
+          SLAYER
           </Link>
         </div>
 

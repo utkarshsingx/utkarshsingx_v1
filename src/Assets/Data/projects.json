@@ -1,31 +1,48 @@
 [
     {
-        "name":"Promptify",
-        "description": "Promptify is a web-based application designed to assist users in generating creative prompts for various purposes. Whether you're a writer looking for inspiration, a student working on a project, or someone in need of ideas for brainstorming, Promptify can help spark your creativity.",
-        "img":"/images/Promptify.png",
+        "name":"Baratie",
+        "description": "Savor the flavors of innovation with Baratie, a React-powered food delivery website inspired by the iconic One Piece Baratie. Immerse yourself in a seamless culinary journey, where intuitive design meets technological prowess. Customize your orders effortlessly and relish the perfect blend of a modern interface and timeless gastronomic delights.",
+        "img":"/images/baratie.png",
         "tech_used":[
-            "Next Js",
+            "React Js",
             "Tailwind",
             "Mongo DB",
-            "Express",
             "Vercel"
         ],
-        "git_Link":"https://github.com/shriyamgera/promptify",
+        "git_Link":"https://github.com/utkarshsingx/baratie",
         "link":"https://promptify-sg.vercel.app"
     },
     {
-        "name":"Weebopedia (Under Development)",
-        "description": "Weebopedia, the ultimate anime hub! Discover in-depth details about your favorite shows, characters, and genres. Engage with a vibrant community, share recommendations, and connect with fellow anime enthusiasts. Your gateway to the dynamic world of Japanese animation awaits at Weebopedia!",
-        "img":"images/Weebopedia.png",
+        "name":"Design Portfolio Website",
+        "description": "Check out my design portfolio! Made with HTML, CSS, and JavaScript, spiced up with GSAP animations for that extra flair. Dive into a mix of creativity and tech, explore cool projects, and enjoy a smooth, eye-catching experience that showcases my design passion! ",
+        "img":"/images/design_portfolio.png",
         "tech_used":[
-            "Next Js",
-            "Tailwind",
-            "Mongo DB",
-            "Express",
+            "HTML",
+            "CSS",
+            "Javascript",
+            "GSAP",
             "Vercel"
         ],
-        "git_Link":"https://github.com/shriyamgera/weebopedia",
-        "link":"https://weebopedia-sg.vercel.app"
+        "git_Link":"https://github.com/utkarshsingx/design-portfolio-website",
+        "link":"https://codeslayer-design.netlify.app/"
+
+        
+    },
+    {
+        "name":"Nike Shoes",
+        "description": "This is a simple web page built using HTML, CSS, and GSAP for animations. This project aims to replicate a part of the Nike website's landing page.",
+        "img":"/images/nike_shoes.png",
+        "tech_used":[
+            "Markup",
+            "Cascade Style Sheet",
+            "Javascript",
+            "GSAP",
+            "Vercel"
+        ],
+        "git_Link":"https://github.com/utkarshsingx/nike_shoes",
+        "link":"https://codeslayer-nike.netlify.app/"
+
+        
     }
 ]
 
