@@ -1,16 +1,30 @@
 [
     {
-        "name":"Baratie- Food Delivery Website",
-        "description": "Savor the flavors of innovation with Baratie, a React-powered food delivery website inspired by the iconic One Piece Baratie. Immerse yourself in a seamless culinary journey, where intuitive design meets technological prowess. Customize your orders effortlessly and relish the perfect blend of a modern interface and timeless gastronomic delights.",
-        "img":"/images/baratie.png",
+        "name":"Zaika - Food Delivery Platform 🚀",
+        "description": "I developed an interactive UI with React Hooks, Redux, and reusable components for efficient state management and code reusability. Performance was optimized with bundlers, Babel, dynamic UI, and code splitting, while leveraging features like functional components, props & state, React Router, and React Testing Library to ensure scalability and testability.",
+        "img":"/images/zaika.png",
         "tech_used":[
             "React Js",
             "Tailwind",
             "Mongo DB",
             "Vercel"
         ],
-        "git_Link":"https://github.com/utkarshsingx/baratie",
-        "link":"https://codeslayer-baratie.netlify.app"
+        "git_Link":"https://github.com/utkarshsingx/Zaika",
+        "link":"https://zaika-kitchen.netlify.app/"
+    },
+    {
+        "name":"ALGORITHM VISUALISER",
+        "description": "I implemented 4+ pathfinding algorithms, including Dijkstra’s, A*, BFS, DFS, and Greedy Best-first Search, in a web app built with React using HTML5, CSS3, and JavaScript for a smooth user experience. I also integrated a Recursive Division Maze Generation algorithm, creating complex mazes and showcasing proficiency in algorithm design and complexity management.",
+        "img":"/images/algo_visualiser.png",
+        "tech_used":[
+            "HTML",
+            "CSS",
+            "Javascript"
+        ],
+        "git_Link":"https://github.com/utkarshsingx/Algorithms-Visualiser",
+        "link":"https://codeslayer-algorithm-visualiser.netlify.app/"
+
+        
     },
     {
         "name":"Design Portfolio Website",
@@ -25,22 +39,6 @@
         ],
         "git_Link":"https://github.com/utkarshsingx/design-portfolio-website",
         "link":"https://codeslayer-design.netlify.app/"
-
-        
-    },
-    {
-        "name":"Nike Shoes design Website",
-        "description": "This is a simple web page built using HTML, CSS, and GSAP for animations. This project aims to replicate a part of the Nike website's landing page.",
-        "img":"/images/nike_shoes.png",
-        "tech_used":[
-            "Markup",
-            "Cascade Style Sheet",
-            "Javascript",
-            "GSAP",
-            "Vercel"
-        ],
-        "git_Link":"https://github.com/utkarshsingx/nike_shoes",
-        "link":"https://codeslayer-nike.netlify.app/"
 
         
     }
