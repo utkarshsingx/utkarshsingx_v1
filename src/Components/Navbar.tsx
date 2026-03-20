@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { FiHome, FiUser, FiBriefcase, FiFolder, FiMail, FiFileText, FiSun, FiMoon } from 'react-icons/fi';
+import React, { useState, useEffect, useRef } from 'react';
+import { FiHome, FiUser, FiBriefcase, FiActivity, FiFolder, FiMail, FiFileText, FiSun, FiMoon } from 'react-icons/fi';
 import { scroller } from 'react-scroll';
 import { motion, AnimatePresence } from 'motion/react';
 import Dock from './Dock';
@@ -15,15 +15,17 @@ const HIDE_DELAY_MS = 800;
 const Navbar: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
   const [isVisible, setIsVisible] = useState(false);
+  const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const isHoveringRef = useRef(false);
 
   useEffect(() => {
-    let hideTimeout: ReturnType<typeof setTimeout>;
-
     const handleScroll = () => {
       if (window.scrollY > SCROLL_THRESHOLD) {
         setIsVisible(true);
-        clearTimeout(hideTimeout);
-        hideTimeout = setTimeout(() => setIsVisible(false), HIDE_DELAY_MS);
+        if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
+        if (!isHoveringRef.current) {
+          hideTimeoutRef.current = setTimeout(() => setIsVisible(false), HIDE_DELAY_MS);
+        }
       } else {
         setIsVisible(false);
       }
@@ -31,7 +33,7 @@ const Navbar: React.FC = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => {
-      clearTimeout(hideTimeout);
+      if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
@@ -40,6 +42,7 @@ const Navbar: React.FC = () => {
     { icon: <FiHome size={18} />, label: 'Home', onClick: () => scrollTo('intro') },
     { icon: <FiUser size={18} />, label: 'About', onClick: () => scrollTo('about') },
     { icon: <FiBriefcase size={18} />, label: 'Experience', onClick: () => scrollTo('experience') },
+    { icon: <FiActivity size={18} />, label: 'Contributions', onClick: () => scrollTo('contributions') },
     { icon: <FiFolder size={18} />, label: 'Work', onClick: () => scrollTo('projects') },
     { icon: <FiMail size={18} />, label: 'Contact', onClick: () => scrollTo('contact') },
     { icon: <FiFileText size={18} />, label: 'Resume', onClick: () => window.open('/UtkarshResume.pdf', '_blank') },
@@ -60,6 +63,17 @@ const Navbar: React.FC = () => {
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
             className="pointer-events-auto"
+            onMouseEnter={() => {
+              isHoveringRef.current = true;
+              if (hideTimeoutRef.current) {
+                clearTimeout(hideTimeoutRef.current);
+                hideTimeoutRef.current = null;
+              }
+            }}
+            onMouseLeave={() => {
+              isHoveringRef.current = false;
+              hideTimeoutRef.current = setTimeout(() => setIsVisible(false), HIDE_DELAY_MS);
+            }}
           >
             <Dock
               items={items}

@@ -21,7 +21,7 @@ const Projects: React.FC = () => {
       id='projects'
     >
       <div className='mb-12'>
-        <Heading index={'03'} title={"Some Things I've Built"} />
+        <Heading index={'04'} title={"Some Things I've Built"} />
       </div>
       {projects?.map((item, index) => (
         <a key={index} href={item.link} target='_blank' rel='noreferrer'>

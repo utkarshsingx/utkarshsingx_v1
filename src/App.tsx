@@ -9,6 +9,7 @@ import NotFound from './Components/NotFound';
 
 const AboutMe = lazy(() => import('./Components/AboutMe').then((m) => ({ default: m.AboutMe })));
 const Experience = lazy(() => import('./Components/Experience'));
+const Contributions = lazy(() => import('./Components/Contributions'));
 const Projects = lazy(() => import('./Components/Projects'));
 const Contact = lazy(() => import('./Components/Contact'));
 const Footer = lazy(() => import('./Components/Footer'));
@@ -25,6 +26,7 @@ function HomePage() {
           <div className='mx-auto flex w-full max-w-5xl flex-col items-center px-6 pt-24 pb-8 md:px-12'>
             <AboutMe />
             <Experience />
+            <Contributions />
             <Projects />
             <Contact />
             <Footer />
