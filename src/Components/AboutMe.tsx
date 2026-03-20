@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Heading from '../ui/Heading';
+import PixelTransition from './PixelTransition';
 import profileImage from '../Assets/Images/profile.png';
 
 export const AboutMe: React.FC = () => {
@@ -69,10 +70,34 @@ export const AboutMe: React.FC = () => {
               isHovered ? '-translate-x-1 -translate-y-1' : '-translate-x-0 -translate-y-0'
             } duration-300`}
           >
-            <img
-              src={profileImage}
-              alt='Profile'
-              className='opacity-100 max-h-[300px] duration-300'
+            <PixelTransition
+              firstContent={
+                <div className='relative w-full h-full'>
+                  <img
+                    src={profileImage}
+                    alt='Profile'
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                  <div
+                    className='absolute inset-0 bg-primary/30 mix-blend-soft-light pointer-events-none'
+                    aria-hidden
+                  />
+                </div>
+              }
+              secondContent={
+                <div
+                  className='flex w-full h-full items-center justify-center bg-navy px-4 text-center'
+                  style={{ width: '100%', height: '100%' }}
+                >
+                  <p className='font-bold text-lg md:text-xl text-primary'>Yeah! It&apos;s me ^_^</p>
+                </div>
+              }
+              gridSize={8}
+              pixelColor='#64ffda'
+              once={false}
+              animationStepDuration={0.4}
+              className='!h-[300px] !w-[240px] shrink-0 border-2 border-primary rounded-none'
+              aspectRatio='125%'
             />
           </div>
         </div>
