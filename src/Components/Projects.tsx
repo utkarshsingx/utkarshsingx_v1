@@ -1,15 +1,17 @@
 import React from 'react';
 import { motion, useInView } from 'framer-motion';
 import Heading from '../ui/Heading';
-import projectsData from '../Assets/Data/projects.json';
 import { FiGithub, FiLink } from 'react-icons/fi';
-import type { Project } from '../types';
-
-const projects = projectsData as Project[];
+import { usePortfolioDataContext } from '../context/PortfolioDataContext';
+import type { ProjectRow } from '../hooks/usePortfolioData';
 
 const Projects: React.FC = () => {
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-50px' });
+  const { data } = usePortfolioDataContext();
+  const projects = data.projects;
+
+  if (!projects.length) return null;
 
   return (
     <motion.div
@@ -24,7 +26,7 @@ const Projects: React.FC = () => {
         <Heading index={'04'} title={"Some Things I've Built"} />
       </div>
       {projects?.map((item, index) => (
-        <a key={index} href={item.link} target='_blank' rel='noreferrer'>
+        <a key={item.id} href={item.link} target='_blank' rel='noreferrer'>
           <div
             className='relative md:hidden mb-16 sm:mb-24 rounded h-full duration-200'
             style={{ backgroundImage: `url(${item.img})` }}
@@ -44,9 +46,11 @@ const Projects: React.FC = () => {
                 ))}
               </div>
               <div className='flex text-xl gap-3 mt-5'>
-                <a href={item.git_Link} target='_blank' rel='noreferrer'>
-                  <FiGithub className='hover:text-primary cursor-pointer duration-200' />
-                </a>
+                {item.git_link && (
+                  <a href={item.git_link} target='_blank' rel='noreferrer'>
+                    <FiGithub className='hover:text-primary cursor-pointer duration-200' />
+                  </a>
+                )}
                 <a href={item.link} target='_blank' rel='noreferrer'>
                   <FiLink className='hover:text-primary cursor-pointer duration-200' />
                 </a>
@@ -57,7 +61,7 @@ const Projects: React.FC = () => {
       ))}
       {projects?.map((item, index) => (
         <motion.div
-          key={index}
+          key={item.id}
           initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
           animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -98,9 +102,11 @@ const Projects: React.FC = () => {
               ))}
             </div>
             <div className={`flex text-xl gap-3 ${index % 2 !== 0 ? '' : 'justify-end'}`}>
-              <a href={item.git_Link} target='_blank' rel='noreferrer'>
-                <FiGithub className='hover:text-primary cursor-pointer duration-200' />
-              </a>
+              {item.git_link && (
+                <a href={item.git_link} target='_blank' rel='noreferrer'>
+                  <FiGithub className='hover:text-primary cursor-pointer duration-200' />
+                </a>
+              )}
               <a href={item.link} target='_blank' rel='noreferrer'>
                 <FiLink className='hover:text-primary cursor-pointer duration-200' />
               </a>

@@ -1,59 +1,46 @@
 import React, { useState } from 'react';
 import Heading from '../ui/Heading';
 import PixelTransition from './PixelTransition';
-import profileImage from '../Assets/Images/profile.png';
+import profileImageFallback from '../Assets/Images/profile.png';
+import { usePortfolioDataContext } from '../context/PortfolioDataContext';
 
 export const AboutMe: React.FC = () => {
   const [isHovered, setisHovered] = useState(false);
+  const { data } = usePortfolioDataContext();
+  const about = data.aboutMe;
+
+  if (!about) return null;
+
+  const profileSrc = about.profile_image_url || profileImageFallback;
+  const paragraphs = about.content.split('\n\n').filter(Boolean);
+
   return (
     <div className='text-lightest_slate text-base sm:text-lg' id='about'>
       <Heading index={'01'} title={'About Me'} />
       <div className='flex mt-8 flex-col lg:flex-row gap-12 items-center'>
         <div className='max-w-[540px] w-full'>
-          <p>
-            Hello! I'm a passionate and detail-oriented web developer with a
-            flair for crafting engaging and responsive websites. With a strong
-            foundation in front-end technologies like
-            <span className='text-primary'> HTML, CSS, and JavaScript</span>,
-            coupled with expertise in popular frameworks and libraries, I
-            specialize in creating seamless user experiences.
-            <br /> <br /> Whether it's building visually appealing interfaces or
-            optimizing back-end functionality, I am dedicated to delivering
-            <span className='text-primary'>
-              {' '}
-              high-quality, performance-driven web solutions.
-            </span>{' '}
-            <br />
-            <br /> I thrive on staying up-to-date with the latest industry
-            trends and technologies to ensure that the websites I develop not
-            only meet but
-            <span className='text-primary'> exceed modern standards</span>.
-            Let's collaborate to turn your web development vision into a
-            reality!
-            <br />
-            <br />
-            Here are a few technologies I've been working with recently:
+          <div>
+            {paragraphs.map((p, i) => {
+              const lines = p.split('\n');
+              return (
+                <p key={i} className={i > 0 ? 'mt-4' : ''}>
+                  {lines.map((line, j) => (
+                    <React.Fragment key={j}>
+                      {line}
+                      {j < lines.length - 1 && <br />}
+                    </React.Fragment>
+                  ))}
+                </p>
+              );
+            })}
             <ul className='grid grid-cols-1 sm:grid-cols-2 gap-1 font-mono mt-4'>
-              <li>
-                <span className='text-primary'>&#9656;</span> JavaScript (ES6+)
-              </li>
-              <li>
-                <span className='text-primary'>&#9656;</span> React
-              </li>
-              <li>
-                <span className='text-primary'>&#9656;</span> Tailwind
-              </li>
-              <li>
-                <span className='text-primary'>&#9656;</span> Node.js
-              </li>
-              <li>
-                <span className='text-primary'>&#9656;</span> Mongo DB
-              </li>
-              <li>
-                <span className='text-primary'>&#9656;</span> React Native
-              </li>
+              {about.tech_list.map((tech, i) => (
+                <li key={i}>
+                  <span className='text-primary'>&#9656;</span> {tech}
+                </li>
+              ))}
             </ul>
-          </p>
+          </div>
         </div>
         <div
           onMouseEnter={() => setisHovered(true)}
@@ -74,7 +61,7 @@ export const AboutMe: React.FC = () => {
               firstContent={
                 <div className='relative w-full h-full'>
                   <img
-                    src={profileImage}
+                    src={profileSrc}
                     alt='Profile'
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   />
