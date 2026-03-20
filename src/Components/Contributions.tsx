@@ -31,7 +31,7 @@ const Contributions: React.FC = () => {
   }, []);
 
   return (
-    <div className='mt-44' id='contributions'>
+    <div className='mt-20 sm:mt-32 md:mt-44' id='contributions'>
       <Heading index={'03'} title={'My Contributions'} />
       <p className='text-lightest_slate mt-6 mb-8 text-base md:text-lg font-light max-w-2xl leading-relaxed'>
         <span className='text-primary font-medium'>When I&apos;m not answering,</span> I&apos;m probably{' '}
@@ -59,11 +59,11 @@ const Contributions: React.FC = () => {
           scrambleCharset='ja'
         />
       </p>
-      <div className='contribution-calendar [&_.react-activity-calendar]:!max-w-full'>
+      <div className='contribution-calendar overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 [&_.react-activity-calendar]:!max-w-full [&_svg]:min-w-[280px]'>
         <GitHubCalendar
           username={GITHUB_USER}
           colorScheme={theme}
-          blockSize={14}
+          blockSize={12}
           blockRadius={4}
           blockMargin={4}
           showWeekdayLabels

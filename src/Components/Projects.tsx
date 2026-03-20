@@ -17,21 +17,21 @@ const Projects: React.FC = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5 }}
-      className='my-28'
+      className='my-16 sm:my-24 md:my-28'
       id='projects'
     >
-      <div className='mb-12'>
+      <div className='mb-8 sm:mb-12'>
         <Heading index={'04'} title={"Some Things I've Built"} />
       </div>
       {projects?.map((item, index) => (
         <a key={index} href={item.link} target='_blank' rel='noreferrer'>
           <div
-            className='relative md:hidden mb-32 rounded h-full duration-200'
+            className='relative md:hidden mb-16 sm:mb-24 rounded h-full duration-200'
             style={{ backgroundImage: `url(${item.img})` }}
           >
             <div className='py-8 px-6 justify-center flex flex-col bg-light_navy bg-opacity-80 rounded hover:drop-shadow-2xl'>
               <a href={item.link} target='_blank' rel='noreferrer'>
-                <div className='font-bold text-off_white mb-2 text-3xl hover:text-primary cursor-pointer duration-200'>
+                <div className='font-bold text-off_white mb-2 text-2xl sm:text-3xl hover:text-primary cursor-pointer duration-200'>
                   {item.name}
                 </div>
               </a>

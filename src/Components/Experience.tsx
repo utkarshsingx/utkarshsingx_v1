@@ -13,14 +13,14 @@ const Experience: React.FC = () => {
   };
 
   return (
-    <div className='mt-44' id='experience'>
+    <div className='mt-20 sm:mt-32 md:mt-44' id='experience'>
       <Heading index={'02'} title={"Where I've Worked"} />
       <div className='flex mt-6 md:flex-row flex-col gap-8'>
-        <div className='flex mr-8 flex-row md:flex-col'>
+        <div className='flex mr-0 sm:mr-4 md:mr-8 flex-row md:flex-col overflow-x-auto pb-2 md:pb-0 gap-0 md:gap-0 -mx-4 px-4 sm:mx-0 sm:px-0'>
           {experience?.map((item) => (
             <div
               key={item.j_no}
-              className={`font-mono py-3 px-3 md:border-l-4 border-b-4 md:border-b-0 ${
+              className={`font-mono py-3 px-3 shrink-0 md:shrink-auto md:border-l-4 border-b-4 md:border-b-0 text-sm sm:text-base ${
                 selectedJob === item ? 'text-primary border-primary' : 'text-lightest_slate border-lightest_navy'
               } hover:bg-lightest_navy cursor-pointer hover:text-primary duration-[600ms] ease-in-out`}
               onClick={() => onSelectHandle(item)}
@@ -29,7 +29,7 @@ const Experience: React.FC = () => {
             </div>
           ))}
         </div>
-        <div className='max-w-[600px]'>
+        <div className='max-w-[600px] w-full'>
           <div className='text-off_white font-[600] text-[20px] ease-in animate-smooth-render duration-200'>
             {selectedJob.position}
             <span className='text-primary'> @ {selectedJob.name}</span>

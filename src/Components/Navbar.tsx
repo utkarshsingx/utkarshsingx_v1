@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useSyncExternalStore } from 'react';
 import { FiHome, FiUser, FiBriefcase, FiActivity, FiFolder, FiMail, FiFileText, FiSun, FiMoon } from 'react-icons/fi';
 import { scroller } from 'react-scroll';
 import { motion, AnimatePresence } from 'motion/react';
@@ -12,8 +12,20 @@ const scrollTo = (id: string) => {
 const SCROLL_THRESHOLD = 100;
 const HIDE_DELAY_MS = 800;
 
+const useIsMobile = () =>
+  useSyncExternalStore(
+    (cb) => {
+      const mq = window.matchMedia('(max-width: 768px)');
+      mq.addEventListener('change', cb);
+      return () => mq.removeEventListener('change', cb);
+    },
+    () => window.innerWidth <= 768,
+    () => false
+  );
+
 const Navbar: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
+  const isMobile = useIsMobile();
   const [isVisible, setIsVisible] = useState(false);
   const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isHoveringRef = useRef(false);
@@ -54,7 +66,7 @@ const Navbar: React.FC = () => {
   ];
 
   return (
-    <div className="fixed inset-x-0 bottom-0 z-50 flex justify-center pointer-events-none">
+    <div className="fixed inset-x-0 bottom-0 z-50 flex justify-center pointer-events-none pb-[var(--safe-area-inset-bottom)]">
       <AnimatePresence>
         {isVisible && (
           <motion.div
@@ -77,9 +89,9 @@ const Navbar: React.FC = () => {
           >
             <Dock
               items={items}
-              panelHeight={68}
-              baseItemSize={50}
-              magnification={90}
+              panelHeight={isMobile ? 52 : 68}
+              baseItemSize={isMobile ? 40 : 50}
+              magnification={isMobile ? 50 : 90}
             />
           </motion.div>
         )}

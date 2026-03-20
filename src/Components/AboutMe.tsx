@@ -6,10 +6,10 @@ import profileImage from '../Assets/Images/profile.png';
 export const AboutMe: React.FC = () => {
   const [isHovered, setisHovered] = useState(false);
   return (
-    <div className='text-lightest_slate font-[20px]' id='about'>
+    <div className='text-lightest_slate text-base sm:text-lg' id='about'>
       <Heading index={'01'} title={'About Me'} />
       <div className='flex mt-8 flex-col lg:flex-row gap-12 items-center'>
-        <div className='max-w-[540px]'>
+        <div className='max-w-[540px] w-full'>
           <p>
             Hello! I'm a passionate and detail-oriented web developer with a
             flair for crafting engaging and responsive websites. With a strong
@@ -33,7 +33,7 @@ export const AboutMe: React.FC = () => {
             <br />
             <br />
             Here are a few technologies I've been working with recently:
-            <ul className='grid grid-cols-2 gap-1 font-mono mt-4'>
+            <ul className='grid grid-cols-1 sm:grid-cols-2 gap-1 font-mono mt-4'>
               <li>
                 <span className='text-primary'>&#9656;</span> JavaScript (ES6+)
               </li>
@@ -96,7 +96,7 @@ export const AboutMe: React.FC = () => {
               pixelColor='#64ffda'
               once={false}
               animationStepDuration={0.4}
-              className='!h-[300px] !w-[240px] shrink-0 border-2 border-primary rounded-none'
+              className='!h-[240px] !w-[192px] sm:!h-[300px] sm:!w-[240px] shrink-0 border-2 border-primary rounded-none'
               aspectRatio='125%'
             />
           </div>
