@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import type { SiteSectionRow } from '../../hooks/usePortfolioData';
 import GlitchText from '../GlitchText';
+import AdminSaveButton from './AdminSaveButton';
 import AdminLoading from './AdminLoading';
+import AdminPreview from './AdminPreview';
+import AdminCheckbox from './AdminCheckbox';
 import { usePortfolioDataContext } from '../../context/PortfolioDataContext';
 
 const DEFAULT_SECTIONS = [
@@ -80,9 +83,10 @@ const SectionsAdmin: React.FC = () => {
   if (error) return <div className="text-red-400">Failed to load: {error}</div>;
 
   return (
-    <div className="max-w-2xl">
-      <div className="min-h-[2rem] flex items-center mb-4">
-        <GlitchText speed={1} enableShadows enableOnHover={false} className="text-off_white text-xl sm:text-2xl">
+    <div className="flex flex-col gap-6 sm:gap-8 w-full items-center px-1 sm:px-0">
+      <div className="w-full max-w-xl">
+        <div className="min-h-[2rem] flex items-center justify-center mb-4">
+        <GlitchText speed={1} enableShadows enableOnHover={false} className="text-off_white text-2xl sm:text-3xl md:text-4xl">
           Sections
         </GlitchText>
       </div>
@@ -97,28 +101,43 @@ const SectionsAdmin: React.FC = () => {
         {sections.map((s) => (
           <div
             key={s.id}
-            className="flex items-center justify-between rounded-lg border border-slate-700/50 bg-slate-800/30 px-4 py-3"
+            className="flex items-center justify-between rounded-lg border border-slate-700/50 bg-slate-800/30 px-4 py-3 transition-colors hover:border-slate-600"
           >
-            <span className="text-lightest_slate capitalize">{s.key}</span>
-            <label className="flex items-center gap-2 cursor-pointer">
-              <span className="text-sm text-slate-400">{s.enabled ? 'Visible' : 'Hidden'}</span>
-              <input
-                type="checkbox"
-                checked={s.enabled}
-                onChange={(e) => toggle(s.id, e.target.checked)}
-                className="rounded"
-              />
-            </label>
+            <span className="text-lightest_slate capitalize font-medium">{s.key}</span>
+            <AdminCheckbox
+              checked={s.enabled}
+              onChange={(e) => toggle(s.id, e.target.checked)}
+              label={s.enabled ? 'Visible' : 'Hidden'}
+            />
           </div>
         ))}
       </div>
-      <button
-        onClick={save}
-        disabled={saving}
-        className="mt-6 px-6 py-2 rounded-lg bg-primary/20 text-primary hover:bg-primary/30 disabled:opacity-50"
-      >
-        {saving ? 'Saving...' : 'Save'}
-      </button>
+      <AdminSaveButton onClick={save} saving={saving} success={saveSuccess} className="mt-6" />
+      </div>
+      <AdminPreview title="Homepage layout">
+        <div className="space-y-2">
+          <p className="text-slate-400 text-sm mb-4">Sections visible on the homepage:</p>
+          {sections.length > 0 ? (
+            <div className="flex flex-col gap-2">
+              {sections.map((s) => (
+                <div
+                  key={s.id}
+                  className={`flex items-center justify-between px-3 py-2 rounded ${
+                    s.enabled ? 'bg-primary/10 border border-primary/30' : 'bg-slate-800/50 border border-slate-700/50 opacity-60'
+                  }`}
+                >
+                  <span className="capitalize text-lightest_slate">{s.key}</span>
+                  <span className={`text-xs ${s.enabled ? 'text-primary' : 'text-slate-500'}`}>
+                    {s.enabled ? 'Visible' : 'Hidden'}
+                  </span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-slate-500 italic">No sections configured</p>
+          )}
+        </div>
+      </AdminPreview>
     </div>
   );
 };
