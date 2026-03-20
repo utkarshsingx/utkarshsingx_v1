@@ -4,7 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import LetterGlitch from '../LetterGlitch';
 import GlitchText from '../GlitchText';
 import ShinyText from '../ShinyText';
-import DecryptedText from '../DecryptedText';
+import GlitchLoadingText from '../GlitchLoadingText';
 
 const AdminLogin: React.FC = () => {
   const { signInWithGoogle, isAdmin, isLoading } = useAuth();
@@ -12,7 +12,7 @@ const AdminLogin: React.FC = () => {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background text-lightest_slate">
-        <DecryptedText text="Loading..." animateOn="view" sequential speed={80} className="text-lightest_slate" />
+        <GlitchLoadingText className="text-lightest_slate font-mono text-lg" />
       </div>
     );
   }

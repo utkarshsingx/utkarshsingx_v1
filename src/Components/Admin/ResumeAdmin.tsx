@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import GlitchText from '../GlitchText';
 import AdminLoading from './AdminLoading';
+import AdminPreview from './AdminPreview';
+import AdminFileInput from './AdminFileInput';
+import Button from '../../ui/Button';
 import { usePortfolioDataContext } from '../../context/PortfolioDataContext';
 
 const ResumeAdmin: React.FC = () => {
@@ -51,35 +54,32 @@ const ResumeAdmin: React.FC = () => {
   if (error) return <div className="text-red-400">Failed to load: {error}</div>;
 
   return (
-    <div className="max-w-2xl">
-      <div className="min-h-[2rem] flex items-center mb-4">
-        <GlitchText speed={1} enableShadows enableOnHover={false} className="text-off_white text-xl sm:text-2xl">
+    <div className="flex flex-col gap-6 sm:gap-8 w-full items-center px-1 sm:px-0">
+      <div className="w-full max-w-xl">
+        <div className="min-h-[2rem] flex items-center justify-center mb-4">
+        <GlitchText speed={1} enableShadows enableOnHover={false} className="text-off_white text-2xl sm:text-3xl md:text-4xl">
           Resume
         </GlitchText>
       </div>
       <div className="space-y-4">
         {currentUrl && (
-          <div>
-            <label className="block text-sm text-slate-400 mb-1">Current resume</label>
+          <div className="space-y-1.5">
+            <label className="block text-sm font-medium text-slate-400">Current resume</label>
             <a
               href={currentUrl}
               target="_blank"
               rel="noreferrer"
-              className="text-primary hover:underline"
+              className="text-primary hover:underline inline-block"
             >
               {currentName || 'View resume'}
             </a>
           </div>
         )}
-        <div>
-          <label className="block text-sm text-slate-400 mb-1">Upload new resume</label>
-          <input
-            type="file"
-            accept=".pdf,.doc,.docx"
-            onChange={(e) => setFile(e.target.files?.[0] || null)}
-            className="text-lightest_slate"
-          />
-        </div>
+        <AdminFileInput
+          label="Upload new resume"
+          accept=".pdf,.doc,.docx"
+          onFileChange={setFile}
+        />
         <button
           onClick={upload}
           disabled={uploading || !file}
@@ -87,7 +87,20 @@ const ResumeAdmin: React.FC = () => {
         >
           {uploading ? 'Uploading...' : 'Upload'}
         </button>
+        </div>
       </div>
+      <AdminPreview title="Public view (resume link)">
+        <div className="flex flex-col items-center gap-4">
+          <p className="text-slate-400 text-sm">Resume appears in the About Me section and as a CTA button.</p>
+          {currentUrl ? (
+            <a href={currentUrl} target="_blank" rel="noreferrer">
+              <Button title={currentName || 'Resume'} />
+            </a>
+          ) : (
+            <p className="text-slate-500 italic">Upload a resume to see preview</p>
+          )}
+        </div>
+      </AdminPreview>
     </div>
   );
 };

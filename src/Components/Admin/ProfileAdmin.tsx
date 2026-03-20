@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import GlitchText from '../GlitchText';
 import AdminLoading from './AdminLoading';
+import AdminPreview from './AdminPreview';
+import AdminFileInput from './AdminFileInput';
+import Heading from '../../ui/Heading';
 import { usePortfolioDataContext } from '../../context/PortfolioDataContext';
 
 const ProfileAdmin: React.FC = () => {
@@ -59,32 +62,29 @@ const ProfileAdmin: React.FC = () => {
   if (error) return <div className="text-red-400">Failed to load: {error}</div>;
 
   return (
-    <div className="max-w-2xl">
-      <div className="min-h-[2rem] flex items-center mb-4">
-        <GlitchText speed={1} enableShadows enableOnHover={false} className="text-off_white text-xl sm:text-2xl">
+    <div className="flex flex-col gap-6 sm:gap-8 w-full items-center px-1 sm:px-0">
+      <div className="w-full max-w-xl">
+        <div className="min-h-[2rem] flex items-center justify-center mb-4">
+        <GlitchText speed={1} enableShadows enableOnHover={false} className="text-off_white text-2xl sm:text-3xl md:text-4xl">
           Profile Picture
         </GlitchText>
       </div>
       <div className="space-y-4">
         {currentUrl && (
-          <div>
-            <label className="block text-sm text-slate-400 mb-2">Current profile image</label>
+          <div className="space-y-1.5">
+            <label className="block text-sm font-medium text-slate-400">Current profile image</label>
             <img
               src={currentUrl}
               alt="Profile"
-              className="w-32 h-32 object-cover rounded border border-slate-600"
+              className="w-32 h-32 object-cover rounded-lg border border-slate-600"
             />
           </div>
         )}
-        <div>
-          <label className="block text-sm text-slate-400 mb-1">Upload new image</label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => setFile(e.target.files?.[0] || null)}
-            className="text-lightest_slate"
-          />
-        </div>
+        <AdminFileInput
+          label="Upload new image"
+          accept="image/*"
+          onFileChange={setFile}
+        />
         <button
           onClick={upload}
           disabled={uploading || !file}
@@ -92,7 +92,26 @@ const ProfileAdmin: React.FC = () => {
         >
           {uploading ? 'Uploading...' : 'Upload'}
         </button>
+        </div>
       </div>
+      <AdminPreview title="Public view (About Me section)">
+        <div>
+          <Heading index="01" title="About Me" />
+          <div className="mt-6 flex justify-center">
+            {currentUrl ? (
+              <img
+                src={currentUrl}
+                alt="Profile"
+                className="w-[192px] h-[240px] object-cover border-2 border-primary"
+              />
+            ) : (
+              <div className="w-[192px] h-[240px] border-2 border-dashed border-slate-600 flex items-center justify-center text-slate-500 text-sm">
+                Upload image to see preview
+              </div>
+            )}
+          </div>
+        </div>
+      </AdminPreview>
     </div>
   );
 };

@@ -19,7 +19,7 @@ const adminSections = [
 
 const AdminDashboard: React.FC = () => {
   return (
-    <div>
+    <div className="w-full flex flex-col items-center text-center">
       <div className="h-12 mb-6">
         <FallingText
           text="Welcome back"
@@ -30,7 +30,7 @@ const AdminDashboard: React.FC = () => {
         />
       </div>
       <div className="min-h-[3rem] flex items-center overflow-visible mb-2">
-        <GlitchText speed={1} enableShadows enableOnHover={false} className="text-off_white text-2xl sm:text-3xl">
+        <GlitchText speed={1} enableShadows enableOnHover={false} className="text-off_white text-2xl sm:text-3xl md:text-4xl">
           Admin Dashboard
         </GlitchText>
       </div>
@@ -44,12 +44,12 @@ const AdminDashboard: React.FC = () => {
           spread={100}
         />
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 w-full max-w-4xl px-1 sm:px-0">
         {adminSections.map(({ to, icon: Icon, label, desc }) => (
           <Link
             key={to}
             to={to}
-            className="flex items-start gap-4 p-4 rounded-lg border border-slate-700/50 bg-slate-800/30 hover:border-primary/50 hover:bg-slate-800/50 transition-colors group"
+            className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 rounded-lg border border-slate-700/50 bg-slate-800/30 hover:border-primary/50 hover:bg-slate-800/50 transition-colors group"
           >
             <div className="p-2 rounded-lg bg-primary/20 text-primary shrink-0">
               <Icon size={24} />
