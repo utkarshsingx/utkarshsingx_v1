@@ -13,7 +13,8 @@ module.exports = {
         navy:"#0a192f",
         lightest_navy:"#233554",
         off_white:"#e6f1ff",
-        light_navy:"#112240"
+        light_navy:"#112240",
+        page_bg_light: "#f0f4f8"
       },
       fontFamily: {
         mono: ['JetBrains Mono', 'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', 'monospace'],
