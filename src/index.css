@@ -8,6 +8,7 @@
 html {
   overflow-x: hidden;
   -webkit-tap-highlight-color: transparent;
+  -webkit-overflow-scrolling: touch;
 }
 
 body {
@@ -186,6 +187,61 @@ code {
   background-color: #f0f4f8 !important;
 }
 
+/* Admin page - top solid, fades to transparent down */
+.admin-page-fade {
+  background: linear-gradient(
+    to bottom,
+    var(--theme-bg) 0%,
+    rgba(var(--theme-bg-rgb), 0.98) 15%,
+    rgba(var(--theme-bg-rgb), 0.92) 30%,
+    rgba(var(--theme-bg-rgb), 0.75) 50%,
+    rgba(var(--theme-bg-rgb), 0.5) 70%,
+    rgba(var(--theme-bg-rgb), 0.25) 85%,
+    transparent 100%
+  );
+}
+
+/* Admin blur - full blur at top, fades to none (mask) */
+.admin-blur-fade {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    rgba(0, 0, 0, 0.95) 20%,
+    rgba(0, 0, 0, 0.8) 40%,
+    rgba(0, 0, 0, 0.5) 60%,
+    rgba(0, 0, 0, 0.2) 80%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    rgba(0, 0, 0, 0.95) 20%,
+    rgba(0, 0, 0, 0.8) 40%,
+    rgba(0, 0, 0, 0.5) 60%,
+    rgba(0, 0, 0, 0.2) 80%,
+    transparent 100%
+  );
+  mask-size: 100% 100%;
+  -webkit-mask-size: 100% 100%;
+}
+
+/* Admin nav - gradient fades from solid at top to transparent at bottom */
+.admin-nav-fade {
+  background: linear-gradient(
+    to bottom,
+    var(--theme-bg) 0%,
+    rgba(var(--theme-bg-rgb), 0.98) 12%,
+    rgba(var(--theme-bg-rgb), 0.92) 24%,
+    rgba(var(--theme-bg-rgb), 0.82) 38%,
+    rgba(var(--theme-bg-rgb), 0.65) 52%,
+    rgba(var(--theme-bg-rgb), 0.42) 68%,
+    rgba(var(--theme-bg-rgb), 0.22) 82%,
+    transparent 100%
+  );
+}
+
 /* Content-to-footer fade - extended, smooth transition */
 .content-to-footer-fade {
   background: linear-gradient(
@@ -215,6 +271,36 @@ code {
     rgba(var(--theme-footer-wave-rgb-255), 0.08) 88%,
     transparent 100%
   );
+}
+
+/* Admin mobile - touch-friendly, prevent iOS zoom on input focus */
+[data-admin] {
+  -webkit-overflow-scrolling: touch;
+}
+@media (max-width: 639px) {
+  [data-admin] input:not([type="checkbox"]):not([type="radio"]),
+  [data-admin] textarea {
+    font-size: 16px !important; /* prevents zoom on iOS */
+  }
+}
+
+/* Admin inputs - force dark background, override browser autofill/white default */
+[data-admin] input:not([type="checkbox"]):not([type="radio"]),
+[data-admin] textarea {
+  background-color: rgb(30 41 59) !important;
+  border-color: rgb(71 85 105) !important;
+  color: rgb(226 232 240) !important;
+}
+[data-admin] input:-webkit-autofill,
+[data-admin] input:-webkit-autofill:hover,
+[data-admin] input:-webkit-autofill:focus,
+[data-admin] input:-webkit-autofill:active,
+[data-admin] textarea:-webkit-autofill,
+[data-admin] textarea:-webkit-autofill:hover,
+[data-admin] textarea:-webkit-autofill:focus,
+[data-admin] textarea:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px rgb(30 41 59) inset !important;
+  -webkit-text-fill-color: rgb(226 232 240) !important;
 }
 
 /* Footer animated gradient background */

@@ -19,21 +19,21 @@ const Projects: React.FC = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5 }}
-      className='my-16 sm:my-24 md:my-28'
+      className='my-12 sm:my-20 md:my-24 lg:my-28 min-w-0'
       id='projects'
     >
-      <div className='mb-8 sm:mb-12'>
+      <div className='mb-6 sm:mb-8 md:mb-12'>
         <Heading index={'04'} title={"Some Things I've Built"} />
       </div>
       {projects?.map((item, index) => (
         <a key={item.id} href={item.link} target='_blank' rel='noreferrer'>
           <div
-            className='relative md:hidden mb-16 sm:mb-24 rounded h-full duration-200'
+            className='relative md:hidden mb-10 sm:mb-16 rounded h-full duration-200'
             style={{ backgroundImage: `url(${item.img})` }}
           >
-            <div className='py-8 px-6 justify-center flex flex-col bg-light_navy bg-opacity-80 rounded hover:drop-shadow-2xl'>
+            <div className='py-6 px-4 sm:py-8 sm:px-6 justify-center flex flex-col bg-light_navy bg-opacity-80 rounded hover:drop-shadow-2xl'>
               <a href={item.link} target='_blank' rel='noreferrer'>
-                <div className='font-bold text-off_white mb-2 text-2xl sm:text-3xl hover:text-primary cursor-pointer duration-200'>
+                <div className='font-bold text-off_white mb-2 text-xl sm:text-2xl md:text-3xl hover:text-primary cursor-pointer duration-200'>
                   {item.name}
                 </div>
               </a>
@@ -65,16 +65,16 @@ const Projects: React.FC = () => {
           initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
           animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.5, delay: index * 0.1 }}
-          className={`md:flex hidden items-center my-20 ${index % 2 !== 0 ? 'flex-row-reverse' : ''}`}
+          className={`md:flex hidden items-center my-16 lg:my-20 min-w-0 ${index % 2 !== 0 ? 'flex-row-reverse' : ''}`}
         >
-          <div className='z-1 relative'>
-            <img src={item.img} alt={`${item.name} Preview`} className='rounded' loading='lazy' />
+          <div className='z-1 relative min-w-0 max-w-full'>
+            <img src={item.img} alt={`${item.name} Preview`} className='rounded max-w-full h-auto' loading='lazy' />
             <a href={item.link} target='_blank' rel='noreferrer'>
               <div className='duration-300 bg-primary absolute inset-0 opacity-[40%] rounded hover:opacity-0 cursor-pointer'></div>
             </a>
           </div>
           <div
-            className={`relative w-[480px] z-10 ${index % 2 !== 0 ? 'translate-x-10' : '-translate-x-10'}`}
+            className={`relative w-full max-w-[480px] z-10 min-w-0 ${index % 2 !== 0 ? 'lg:translate-x-10' : 'lg:-translate-x-10'}`}
           >
             <a href={item.link} target='_blank' rel='noreferrer'>
               <div

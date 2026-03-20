@@ -27,12 +27,12 @@ const Introduction: React.FC = () => {
       </div>
 
       {/* Center-aligned content overlay */}
-      <div className='absolute inset-0 z-10 flex flex-col items-center justify-center px-4 sm:px-6 text-center'>
-        <div className='font-mono text-primary text-md'>Hi, my name is</div>
-        <div className='font-[700] md:text-[70px] text-[40px] font-sans text-lightest_slate leading-[1.2] pb-3'>
+      <div className='absolute inset-0 z-10 flex flex-col items-center justify-center px-4 sm:px-6 text-center min-w-0'>
+        <div className='font-mono text-primary text-sm sm:text-base'>Hi, my name is</div>
+        <div className='font-[700] text-[32px] sm:text-[48px] md:text-[70px] font-sans text-lightest_slate leading-[1.2] pb-2 sm:pb-3'>
           <ShinyText
             text='Utkarsh Singh.'
-            className='font-[700] font-sans md:text-[70px] text-[40px] text-lightest_slate'
+            className='font-[700] font-sans text-[32px] sm:text-[48px] md:text-[70px] text-lightest_slate'
             color='#a8b2d1'
             shineColor='#64ffda'
             speed={2}
@@ -45,7 +45,7 @@ const Introduction: React.FC = () => {
             <Shuffle
               text='the web'
               tag='span'
-              className='normal-case text-slate font-sans font-[700] md:text-[70px] text-[40px]'
+              className='normal-case text-slate font-sans font-[700] text-[32px] sm:text-[48px] md:text-[70px]'
               shuffleDirection='right'
               duration={0.35}
               animationMode='evenodd'
@@ -64,7 +64,7 @@ const Introduction: React.FC = () => {
             .
           </span>
         </div>
-        <div className='text-base sm:text-lg text-lightest_slate max-w-[580px] mb-6 sm:mb-8 px-1'>
+        <div className='text-sm sm:text-base md:text-lg text-lightest_slate max-w-[580px] mb-5 sm:mb-6 md:mb-8 px-1'>
           I'm a software engineer specializing in <span className='text-primary'>building </span>and
           <span className='text-primary'> designing </span> exceptional digital experiences.
           I love to <span className='text-primary'>code</span> and looking for new ideas to

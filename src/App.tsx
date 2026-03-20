@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Navbar from './Components/Navbar';
+import GlitchLoadingText from './Components/GlitchLoadingText';
 import Introduction from './Components/Introduction';
 import LeftSidebar from './Components/LeftSidebar';
 import RightSidebar from './Components/RightSidebar';
@@ -31,12 +32,16 @@ function HomePageContent() {
   const isEnabled = (key: string) => sections.find((s) => s.key === key)?.enabled ?? true;
 
   if (loading) {
-    return <div className='relative mx-auto flex w-full max-w-5xl flex-col items-center px-4 pt-20 pb-0 sm:px-6 md:px-12 md:pt-24 min-h-[400px]' />;
+    return (
+      <div className='relative mx-auto flex w-full max-w-5xl min-w-0 flex-col items-center justify-center overflow-x-hidden px-4 pt-16 pb-0 sm:px-6 sm:pt-20 md:px-12 md:pt-24 min-h-[400px]'>
+        <GlitchLoadingText className='text-lightest_slate font-mono text-lg' />
+      </div>
+    );
   }
 
   return (
     <Suspense fallback={<div className='min-h-[400px]' />}>
-      <div className='relative mx-auto flex w-full max-w-5xl flex-col items-center px-4 pt-20 pb-0 sm:px-6 md:px-12 md:pt-24'>
+      <div className='relative mx-auto flex w-full max-w-5xl min-w-0 flex-col items-center overflow-x-hidden px-4 pt-16 pb-0 sm:px-6 sm:pt-20 md:px-12 md:pt-24'>
         {isEnabled('about') && <AboutMe />}
         {isEnabled('experience') && <Experience />}
         {isEnabled('contributions') && <Contributions />}
@@ -56,7 +61,7 @@ function HomePage() {
       <Navbar />
       <LeftSidebar />
       <RightSidebar />
-      <div className='flex flex-col items-center justify-center w-full'>
+      <div className='flex min-w-0 flex-col items-center justify-center w-full overflow-x-hidden'>
         <Introduction />
         <HomePageContent />
         <Suspense fallback={<div className="min-h-[600px]" />}>

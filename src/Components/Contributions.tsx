@@ -1,8 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useSyncExternalStore } from 'react';
 import { GitHubCalendar } from 'react-github-calendar';
 import 'react-github-calendar/tooltips.css';
 import Heading from '../ui/Heading';
 import { useTheme } from '../context/ThemeContext';
+
+const useIsMobile = () =>
+  useSyncExternalStore(
+    (cb) => {
+      const mq = window.matchMedia('(max-width: 768px)');
+      mq.addEventListener('change', cb);
+      return () => mq.removeEventListener('change', cb);
+    },
+    () => window.innerWidth <= 768,
+    () => false
+  );
 import DecryptedText from './DecryptedText';
 import Shuffle from './Shuffle';
 import CountUp from './CountUp';
@@ -18,6 +29,7 @@ const CONTRIB_API = `https://github-contributions-api.jogruber.de/v4/${GITHUB_US
 
 const Contributions: React.FC = () => {
   const { theme } = useTheme();
+  const isMobile = useIsMobile();
   const [totalContributions, setTotalContributions] = useState<number | null>(null);
 
   useEffect(() => {
@@ -31,9 +43,9 @@ const Contributions: React.FC = () => {
   }, []);
 
   return (
-    <div className='mt-20 sm:mt-32 md:mt-44' id='contributions'>
+    <div className='mt-14 sm:mt-24 md:mt-32 lg:mt-44 min-w-0' id='contributions'>
       <Heading index={'03'} title={'My Contributions'} />
-      <p className='text-lightest_slate mt-6 mb-8 text-base md:text-lg font-light max-w-2xl leading-relaxed'>
+      <p className='text-lightest_slate mt-4 sm:mt-6 mb-6 sm:mb-8 text-sm sm:text-base md:text-lg font-light max-w-2xl leading-relaxed'>
         <span className='text-primary font-medium'>When I&apos;m not answering,</span> I&apos;m probably{' '}
         <DecryptedText
           text='LOCKED-IN'
@@ -63,9 +75,9 @@ const Contributions: React.FC = () => {
         <GitHubCalendar
           username={GITHUB_USER}
           colorScheme={theme}
-          blockSize={12}
-          blockRadius={4}
-          blockMargin={4}
+          blockSize={isMobile ? 8 : 12}
+          blockRadius={isMobile ? 2 : 4}
+          blockMargin={isMobile ? 2 : 4}
           showWeekdayLabels
           showTotalCount={false}
           theme={{

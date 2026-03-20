@@ -15,9 +15,9 @@ export const AboutMe: React.FC = () => {
   const paragraphs = about.content.split('\n\n').filter(Boolean);
 
   return (
-    <div className='text-lightest_slate text-base sm:text-lg' id='about'>
+    <div className='text-lightest_slate text-sm sm:text-base md:text-lg min-w-0' id='about'>
       <Heading index={'01'} title={'About Me'} />
-      <div className='flex mt-8 flex-col lg:flex-row gap-12 items-center'>
+      <div className='flex mt-6 sm:mt-8 flex-col lg:flex-row gap-8 sm:gap-10 md:gap-12 items-center'>
         <div className='max-w-[540px] w-full'>
           <div>
             {paragraphs.map((p, i) => {
@@ -83,7 +83,7 @@ export const AboutMe: React.FC = () => {
               pixelColor='#64ffda'
               once={false}
               animationStepDuration={0.4}
-              className='!h-[240px] !w-[192px] sm:!h-[300px] sm:!w-[240px] shrink-0 border-2 border-primary rounded-none'
+              className='!h-[200px] !w-[160px] sm:!h-[240px] sm:!w-[192px] md:!h-[300px] md:!w-[240px] shrink-0 border-2 border-primary rounded-none'
               aspectRatio='125%'
             />
           </div>

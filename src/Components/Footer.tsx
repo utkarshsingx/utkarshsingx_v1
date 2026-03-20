@@ -101,13 +101,13 @@ const Footer: React.FC = () => {
       </div>
 
       {/* What's Next - centered in footer */}
-      <div className="relative z-10 flex flex-col items-center justify-center w-full min-h-[320px] sm:min-h-[380px] md:min-h-[420px] px-4 sm:px-6 py-12 sm:py-16">
+      <div className="relative z-10 flex min-w-0 flex-col items-center justify-center w-full min-h-[280px] sm:min-h-[320px] md:min-h-[380px] lg:min-h-[420px] px-4 sm:px-6 py-10 sm:py-12 md:py-16">
         {showContact && <Contact />}
       </div>
 
       {/* Built by - on wave background */}
-      <div className="relative z-10 flex flex-col items-center justify-center px-4 sm:px-6 py-8 sm:py-12 min-h-[160px] sm:min-h-[200px]">
-        <div className="flex lg:hidden gap-4 text-2xl mb-4">
+      <div className="relative z-10 flex min-w-0 flex-col items-center justify-center px-4 sm:px-6 py-6 sm:py-8 md:py-12 min-h-[140px] sm:min-h-[160px] md:min-h-[200px]">
+        <div className="flex lg:hidden gap-3 sm:gap-4 text-xl sm:text-2xl mb-3 sm:mb-4">
           {footerLinks.map((link) => {
             const Icon = iconMap[link.type as keyof typeof iconMap];
             if (!Icon) return null;
@@ -118,13 +118,17 @@ const Footer: React.FC = () => {
             );
           })}
         </div>
-        <button
-          type="button"
-          onClick={handleBuiltByClick}
-          className="font-mono hover:text-primary text-center text-lightest_slate cursor-pointer duration-300 bg-transparent border-none"
-        >
-          Built by Utkarsh Singh with 🖤
-        </button>
+        <p className="font-mono text-center text-lightest_slate text-sm sm:text-base">
+          Built by{' '}
+          <button
+            type="button"
+            onClick={handleBuiltByClick}
+            className="hover:text-primary cursor-pointer duration-300 bg-transparent border-none p-0 font-mono text-lightest_slate"
+          >
+            Utkarsh Singh
+          </button>
+          {' '}with 🖤
+        </p>
       </div>
     </footer>
   );
