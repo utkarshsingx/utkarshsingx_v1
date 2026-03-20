@@ -75,7 +75,9 @@ function DockItem({
       ref={ref}
       style={{
         width: size,
-        height: size
+        height: size,
+        minWidth: baseItemSize,
+        minHeight: baseItemSize
       }}
       onHoverStart={() => isHovered.set(1)}
       onHoverEnd={() => isHovered.set(0)}
@@ -199,7 +201,7 @@ export default function Dock({
           isHovered.set(0);
           mouseX.set(Infinity);
         }}
-        className={`${className} absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center justify-center w-fit gap-4 rounded-2xl border-lightest_navy dark:border-lightest_navy light:border-slate-200 border-2 py-2 px-4 bg-navy/80 dark:bg-navy/80 light:bg-white/80 backdrop-blur-lg`}
+        className={`${className} absolute bottom-2 sm:bottom-4 left-1/2 -translate-x-1/2 flex items-center justify-center w-fit max-w-[calc(100vw-2rem)] gap-2 sm:gap-3 md:gap-4 rounded-xl sm:rounded-2xl border-lightest_navy dark:border-lightest_navy light:border-slate-200 border-2 py-1.5 sm:py-2 px-2 sm:px-4 bg-navy/80 dark:bg-navy/80 light:bg-white/80 backdrop-blur-lg overflow-x-auto overflow-y-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden`}
         style={{ height: panelHeight }}
         role="toolbar"
         aria-label="Navigation dock"

@@ -166,6 +166,18 @@ code {
   fill: var(--theme-bg);
 }
 
+/* Contribution calendar - mobile: no horizontal scroll, scale SVG to fit, hide month labels via component */
+.contribution-calendar {
+  -webkit-overflow-scrolling: touch;
+}
+@media (max-width: 768px) {
+  .contribution-calendar svg {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
 /* Contribution calendar block hover - primary accent from theme */
 .contribution-calendar rect[data-date] {
   cursor: pointer;

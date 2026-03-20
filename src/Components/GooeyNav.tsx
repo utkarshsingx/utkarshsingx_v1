@@ -340,7 +340,7 @@ const GooeyNav: React.FC<GooeyNavProps> = ({
         <nav className="flex relative justify-center" style={{ transform: 'translate3d(0,0,0.01px)' }}>
           <ul
             ref={navRef}
-            className="flex flex-wrap gap-2 sm:gap-4 md:gap-6 lg:gap-8 list-none p-0 px-2 sm:px-4 m-0 relative z-[3] justify-center text-sm sm:text-base"
+            className="flex flex-wrap gap-1.5 sm:gap-3 md:gap-5 lg:gap-6 list-none p-0 px-2 sm:px-4 m-0 relative z-[3] justify-center text-xs sm:text-sm md:text-base max-w-full overflow-x-auto overflow-y-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             style={{
               color: 'var(--theme-text, #a8b2d1)',
               textShadow: '0 1px 1px hsl(205deg 30% 10% / 0.2)'
@@ -357,7 +357,7 @@ const GooeyNav: React.FC<GooeyNavProps> = ({
                   href={item.to ?? item.href ?? '#'}
                   onClick={(e) => handleClickInternal(e, index)}
                   onKeyDown={(e) => handleKeyDown(e, index)}
-                  className="outline-none py-[0.5em] sm:py-[0.6em] px-[0.6em] sm:px-[1em] inline-block"
+                  className="outline-none py-2 sm:py-2.5 px-2.5 sm:px-3 min-h-[44px] flex items-center justify-center rounded-full [touch-action:manipulation]"
                 >
                   {item.label}
                 </a>

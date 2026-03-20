@@ -43,7 +43,7 @@ const Contributions: React.FC = () => {
   }, []);
 
   return (
-    <div className='mt-14 sm:mt-24 md:mt-32 lg:mt-44 min-w-0' id='contributions'>
+    <div className='mt-14 sm:mt-24 md:mt-32 lg:mt-44 min-w-0 w-full px-1 sm:px-0' id='contributions'>
       <Heading index={'03'} title={'My Contributions'} />
       <p className='text-lightest_slate mt-4 sm:mt-6 mb-6 sm:mb-8 text-sm sm:text-base md:text-lg font-light max-w-2xl leading-relaxed'>
         <span className='text-primary font-medium'>When I&apos;m not answering,</span> I&apos;m probably{' '}
@@ -71,14 +71,15 @@ const Contributions: React.FC = () => {
           scrambleCharset='ja'
         />
       </p>
-      <div className='contribution-calendar w-full overflow-x-auto [&_.react-activity-calendar]:!max-w-full [&_.react-activity-calendar]:!w-full'>
+      <div className="contribution-calendar w-full overflow-x-hidden sm:overflow-x-auto sm:overscroll-x-contain -mx-1 sm:mx-0 pb-2">
         <GitHubCalendar
           username={GITHUB_USER}
           colorScheme={theme}
-          blockSize={isMobile ? 8 : 12}
+          blockSize={isMobile ? 6 : 12}
           blockRadius={isMobile ? 2 : 4}
-          blockMargin={isMobile ? 2 : 4}
-          showWeekdayLabels
+          blockMargin={isMobile ? 1 : 4}
+          showWeekdayLabels={!isMobile}
+          showMonthLabels={!isMobile}
           showTotalCount={false}
           theme={{
             dark: [...contributionCalendarTheme.dark],
@@ -95,19 +96,19 @@ const Contributions: React.FC = () => {
             }
           }}
         />
-        {totalContributions !== null && (
-          <p className='mt-4 text-lightest_slate text-sm md:text-base font-mono'>
-            <CountUp
-              to={totalContributions}
-              from={0}
-              duration={1.5}
-              separator=','
-              className='bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent font-semibold'
-            />
-            {' contributions in the last year'}
-          </p>
-        )}
       </div>
+      {totalContributions !== null && (
+        <p className='mt-4 text-lightest_slate text-sm md:text-base font-mono text-center sm:text-left max-w-full'>
+          <CountUp
+            to={totalContributions}
+            from={0}
+            duration={1.5}
+            separator=','
+            className='bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent font-semibold'
+          />
+          {' contributions in the last year'}
+        </p>
+      )}
     </div>
   );
 };
