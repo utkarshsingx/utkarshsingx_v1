@@ -1,9 +1,12 @@
 import React, { Suspense, useMemo, useSyncExternalStore } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FaXTwitter } from 'react-icons/fa6';
 import { FiGithub, FiLinkedin } from 'react-icons/fi';
 import WaveBackground from './WaveBackground';
 import Contact from './Contact';
 import { useTheme } from '../context/ThemeContext';
+import { useAuth } from '../context/AuthContext';
+import { usePortfolioDataContext } from '../context/PortfolioDataContext';
 
 function useFooterWaveColor(): [number, number, number] {
   const { theme } = useTheme();
@@ -44,10 +47,29 @@ const useIsMobile = () =>
     () => false
   );
 
+const iconMap = {
+  github: FiGithub,
+  twitter: FaXTwitter,
+  linkedin: FiLinkedin
+};
+
 const Footer: React.FC = () => {
   const waveColor = useFooterWaveColor();
   const primaryColor = usePrimaryColor();
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
+  const { isAdmin, signInWithGoogle } = useAuth();
+  const { data } = usePortfolioDataContext();
+  const footerLinks = data.links.filter((l) => l.type !== 'email');
+  const showContact = data.siteSections.find((s) => s.key === 'contact')?.enabled ?? true;
+
+  const handleBuiltByClick = () => {
+    if (isAdmin) {
+      navigate('/admin');
+    } else {
+      signInWithGoogle();
+    }
+  };
 
   return (
     <footer className="relative w-full overflow-hidden" id="footer">
@@ -80,27 +102,29 @@ const Footer: React.FC = () => {
 
       {/* What's Next - centered in footer */}
       <div className="relative z-10 flex flex-col items-center justify-center w-full min-h-[320px] sm:min-h-[380px] md:min-h-[420px] px-4 sm:px-6 py-12 sm:py-16">
-        <Contact />
+        {showContact && <Contact />}
       </div>
 
       {/* Built by - on wave background */}
       <div className="relative z-10 flex flex-col items-center justify-center px-4 sm:px-6 py-8 sm:py-12 min-h-[160px] sm:min-h-[200px]">
         <div className="flex lg:hidden gap-4 text-2xl mb-4">
-          <a href="https://github.com/utkarshsingx" target="_blank" rel="noreferrer">
-            <FiGithub className="hover:text-primary cursor-pointer duration-300" />
-          </a>
-          <a href="https://twitter.com/utkarshsingx" target="_blank" rel="noreferrer">
-            <FaXTwitter className="hover:text-primary cursor-pointer duration-300" />
-          </a>
-          <a href="https://www.linkedin.com/in/utkarsh-singh-0b9090227/" target="_blank" rel="noreferrer">
-            <FiLinkedin className="hover:text-primary cursor-pointer duration-300" />
-          </a>
+          {footerLinks.map((link) => {
+            const Icon = iconMap[link.type as keyof typeof iconMap];
+            if (!Icon) return null;
+            return (
+              <a key={link.id} href={link.url} target="_blank" rel="noreferrer">
+                <Icon className="hover:text-primary cursor-pointer duration-300" />
+              </a>
+            );
+          })}
         </div>
-        <a href="https://www.linkedin.com/in/utkarsh-singh-0b9090227/" target="_blank" rel="noreferrer">
-          <div className="font-mono hover:text-primary text-center text-lightest_slate cursor-default duration-300">
-            Built by Utkarsh Singh with 🖤
-          </div>
-        </a>
+        <button
+          type="button"
+          onClick={handleBuiltByClick}
+          className="font-mono hover:text-primary text-center text-lightest_slate cursor-pointer duration-300 bg-transparent border-none"
+        >
+          Built by Utkarsh Singh with 🖤
+        </button>
       </div>
     </footer>
   );

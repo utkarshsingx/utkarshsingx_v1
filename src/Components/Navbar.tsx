@@ -4,6 +4,7 @@ import { scroller } from 'react-scroll';
 import { motion, AnimatePresence } from 'motion/react';
 import Dock from './Dock';
 import { useTheme } from '../context/ThemeContext';
+import { usePortfolioDataContext } from '../context/PortfolioDataContext';
 
 const scrollTo = (id: string) => {
   scroller.scrollTo(id, { smooth: true, duration: 500, offset: -100 });
@@ -25,6 +26,8 @@ const useIsMobile = () =>
 
 const Navbar: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
+  const { data } = usePortfolioDataContext();
+  const resumeUrl = data.resume?.file_url || '/UtkarshResume.pdf';
   const isMobile = useIsMobile();
   const [isVisible, setIsVisible] = useState(false);
   const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -57,7 +60,7 @@ const Navbar: React.FC = () => {
     { icon: <FiActivity size={18} />, label: 'Contributions', onClick: () => scrollTo('contributions') },
     { icon: <FiFolder size={18} />, label: 'Work', onClick: () => scrollTo('projects') },
     { icon: <FiMail size={18} />, label: 'Contact', onClick: () => scrollTo('contact') },
-    { icon: <FiFileText size={18} />, label: 'Resume', onClick: () => window.open('/UtkarshResume.pdf', '_blank') },
+    { icon: <FiFileText size={18} />, label: 'Resume', onClick: () => window.open(resumeUrl, '_blank') },
     {
       icon: theme === 'dark' ? <FiSun size={18} /> : <FiMoon size={18} />,
       label: theme === 'dark' ? 'Light' : 'Dark',
