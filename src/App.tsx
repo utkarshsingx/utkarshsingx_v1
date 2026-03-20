@@ -11,7 +11,6 @@ const AboutMe = lazy(() => import('./Components/AboutMe').then((m) => ({ default
 const Experience = lazy(() => import('./Components/Experience'));
 const Contributions = lazy(() => import('./Components/Contributions'));
 const Projects = lazy(() => import('./Components/Projects'));
-const Contact = lazy(() => import('./Components/Contact'));
 const Footer = lazy(() => import('./Components/Footer'));
 
 function HomePage() {
@@ -23,14 +22,20 @@ function HomePage() {
       <div className='flex flex-col items-center justify-center w-full'>
         <Introduction />
         <Suspense fallback={<div className='min-h-[400px]' />}>
-          <div className='mx-auto flex w-full max-w-5xl flex-col items-center px-6 pt-24 pb-8 md:px-12'>
+          <div className='relative mx-auto flex w-full max-w-5xl flex-col items-center px-4 pt-20 pb-0 sm:px-6 md:px-12 md:pt-24'>
             <AboutMe />
             <Experience />
             <Contributions />
             <Projects />
-            <Contact />
-            <Footer />
+            {/* Fade from Projects into footer (What's Next) - uses theme */}
+            <div
+              className="absolute inset-x-0 bottom-0 h-48 sm:h-64 md:h-80 pointer-events-none content-to-footer-fade"
+              aria-hidden
+            />
           </div>
+        </Suspense>
+        <Suspense fallback={<div className="min-h-[600px]" />}>
+          <Footer />
         </Suspense>
       </div>
     </>

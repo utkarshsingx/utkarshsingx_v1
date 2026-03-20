@@ -5,31 +5,54 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
 body {
   margin: 0;
+  overflow-x: hidden;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  touch-action: manipulation;
+}
+
+/* Safe area inset variables for notched devices */
+:root {
+  --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-inset-top: env(safe-area-inset-top, 0px);
 }
 
 /* Theme variables - update these when changing site theme */
 .dark {
   --theme-bg: #0a192f;
+  --theme-bg-rgb: 10, 25, 47;
   --theme-bg-secondary: #112240;
   --theme-border: #233554;
   --theme-text: #a8b2d1;
   --theme-primary: #64ffda;
   --theme-primary-rgb: 100, 255, 218;
+  --theme-primary-rgb-normalized: 0.392, 1, 0.855;
+  --theme-footer-wave: #0a1930;
+  --theme-footer-wave-rgb: 0.039, 0.098, 0.188;
+  --theme-footer-wave-rgb-255: 10, 25, 48;
 }
 .light {
   --theme-bg: #ffffff;
+  --theme-bg-rgb: 255, 255, 255;
   --theme-bg-secondary: #f0f4f8;
   --theme-border: #cbd5e1;
   --theme-text: #233554;
   --theme-primary: #0891b2;
   --theme-primary-rgb: 8, 145, 178;
+  --theme-primary-rgb-normalized: 0.031, 0.569, 0.698;
+  --theme-footer-wave: #0891b2;
+  --theme-footer-wave-rgb: 0.031, 0.569, 0.698;
+  --theme-footer-wave-rgb-255: 8, 145, 178;
 }
 
 /* Dark mode (default) */
@@ -161,4 +184,45 @@ code {
 .light .glitch-text::before {
   color: #0a192f !important;
   background-color: #f0f4f8 !important;
+}
+
+/* Content-to-footer fade - extended, smooth transition */
+.content-to-footer-fade {
+  background: linear-gradient(
+    to top,
+    var(--theme-bg) 0%,
+    rgba(var(--theme-bg-rgb), 0.98) 15%,
+    rgba(var(--theme-bg-rgb), 0.92) 28%,
+    rgba(var(--theme-bg-rgb), 0.78) 42%,
+    rgba(var(--theme-bg-rgb), 0.55) 58%,
+    rgba(var(--theme-bg-rgb), 0.3) 75%,
+    transparent 100%
+  );
+}
+
+/* Footer fade gradient - extended, smooth theme → wave transition */
+.footer-fade-gradient {
+  background: linear-gradient(
+    to bottom,
+    var(--theme-bg) 0%,
+    var(--theme-bg) 8%,
+    rgba(var(--theme-bg-rgb), 0.98) 18%,
+    rgba(var(--theme-bg-rgb), 0.92) 28%,
+    rgba(var(--theme-bg-rgb), 0.82) 38%,
+    rgba(var(--theme-bg-rgb), 0.65) 50%,
+    rgba(var(--theme-bg-rgb), 0.42) 62%,
+    rgba(var(--theme-footer-wave-rgb-255), 0.25) 75%,
+    rgba(var(--theme-footer-wave-rgb-255), 0.08) 88%,
+    transparent 100%
+  );
+}
+
+/* Footer animated gradient background */
+@keyframes footer-gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
