@@ -59,7 +59,7 @@ const Contributions: React.FC = () => {
           scrambleCharset='ja'
         />
       </p>
-      <div className='contribution-calendar overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 [&_.react-activity-calendar]:!max-w-full [&_svg]:min-w-[280px]'>
+      <div className='contribution-calendar w-full overflow-x-auto [&_.react-activity-calendar]:!max-w-full [&_.react-activity-calendar]:!w-full'>
         <GitHubCalendar
           username={GITHUB_USER}
           colorScheme={theme}
