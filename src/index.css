@@ -1,16 +1,74 @@
+@import '@fontsource/jetbrains-mono/latin-400.css';
+@import '@fontsource/jetbrains-mono/latin-700.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  margin:40px;
-  background-color: #0a192f;
-  color: aliceblue;
+  margin: 40px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Dark mode (default) */
+.dark body {
+  background-color: #0a192f;
+  color: aliceblue;
+}
+
+/* Light mode */
+.light body {
+  background-color: #f0f4f8;
+  color: #0a192f;
+}
+
+.light .text-off_white {
+  color: #0a192f;
+}
+
+.light .text-lightest_slate {
+  color: #495670;
+}
+
+.light .text-slate {
+  color: #233554;
+}
+
+.light .bg-light_navy,
+.light .bg-lightest_navy {
+  background-color: #e2e8f0;
+}
+
+.light .border-lightest_navy {
+  border-color: #cbd5e1;
+}
+
+.light .bg-navy {
+  background-color: #ffffff;
+}
+
+/* Primary (cyan) - use darker shade in light mode for visibility */
+.light .text-primary,
+.light .hover\:text-primary:hover,
+.light a:hover .text-primary,
+.light button:hover .text-primary {
+  color: #0891b2 !important;
+}
+
+.light .border-primary {
+  border-color: #0891b2 !important;
+}
+
+.light .bg-primary {
+  background-color: #0891b2 !important;
+}
+
+.light .btn_hover_shadow:hover {
+  box-shadow: 3px 3px #0891b2;
 }
 
 code {
