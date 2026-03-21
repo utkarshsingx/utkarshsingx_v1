@@ -326,10 +326,48 @@ export const SecretTerminal: React.FC<SecretTerminalProps> = ({ onClose }) => {
           }
         ]);
       } else if (lower === 'ls' || lower === 'dir') {
+        const envContent = `# ═══════════════════════════════════════════════
+# [CLASSIFIED] BACKDOOR CONFIG — DO NOT SHARE
+# Intercepted from: nexus.local (10.0.0.42)
+# ═══════════════════════════════════════════════
+
+# Initiate protocols (1-5) — pick your path
+PROTOCOL_GHOST=1
+PROTOCOL_JARVIS=2
+PROTOCOL_HOMIE=3
+PROTOCOL_COFFEE=4
+PROTOCOL_MATRIX=5
+
+# Sys ops — they don't know you have these
+CMD_BASIC=help,clear,whoami,ls,date,uname,fortune,cowsay
+CMD_SNOOP=top,ping,neofetch,git status
+
+# The fun stuff — you weren't supposed to find these
+CMD_DECODE=decode,decrypt
+CMD_HACK=hack,hackerman,hack the planet
+CMD_MYSTERY=42,the answer,summon,open sesame
+CMD_SYSTEM=uptime,env,banner,who,trace,init 6
+
+# Escape hatches — vim users know the struggle
+EXIT=exit,quit,:q!
+
+# P.S. The answer is 42. The question? Keep digging. 👻
+`;
+        try {
+          const blob = new Blob([envContent], { type: 'text/plain' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = '.env';
+          a.click();
+          URL.revokeObjectURL(url);
+        } catch (_) {
+          /* download may fail in some contexts */
+        }
         setHistory((h) => [
           ...h,
-          { type: 'output', text: 'README.md  secrets/  backdoor.exe  👻  ☕' },
-          { type: 'output', text: '(use numbers 1-5 to interact)' }
+          { type: 'output', text: 'README.md  secrets/  backdoor.exe  .env  👻  ☕' },
+          { type: 'output', text: '(use numbers 1-5 to interact)\n> .env downloaded — contains command reference' }
         ]);
       } else if (lower === 'sudo') {
         setHistory((h) => [
@@ -522,32 +560,48 @@ export const SecretTerminal: React.FC<SecretTerminalProps> = ({ onClose }) => {
                 {phase !== 'boot' && (
                   <div className="grid gap-y-0.5 sm:gap-y-1 text-xs sm:text-sm break-words min-h-0">
                     {history.map((item, i) => (
-                      <div key={i} className="text-lightest_slate">
-                        {item.type === 'input' && (
-                          <span className="text-primary">{item.text}</span>
+                      <React.Fragment key={i}>
+                        {i === BOOT_LINES.length && phase === 'prompt' && (
+                          <div className="mt-1.5 sm:mt-2 flex flex-col gap-[2px] sm:gap-0.5 shrink-0 [contain:layout]">
+                            {OPTIONS.map((opt) => (
+                              <button
+                                key={opt.id}
+                                type="button"
+                                onClick={() => handleOptionSelect(opt.action)}
+                                className="w-full sm:w-fit h-8 sm:h-auto min-h-0 py-0 sm:py-0.5 px-2 sm:px-0 -mx-2 sm:mx-0 rounded sm:rounded-none text-left font-mono text-sm sm:text-base leading-tight text-lightest_slate transition-colors hover:text-primary hover:bg-slate-800/50 sm:hover:bg-transparent active:bg-slate-700/50 sm:active:bg-transparent flex items-center"
+                              >
+                                {opt.label}
+                              </button>
+                            ))}
+                          </div>
                         )}
-                        {item.type === 'output' &&
-                          (item.kind === 'ghost' ? (
-                            <GhostDisplay />
-                          ) : item.text ? (
-                            item.animated ? (
-                              <TextType
-                                text={[item.text]}
-                                typingSpeed={35}
-                                loop={false}
-                                showCursor={false}
-                                className="whitespace-pre text-lightest_slate"
-                              />
-                            ) : (
-                              <span className="whitespace-pre text-lightest_slate">
-                                {item.text}
-                              </span>
-                            )
-                          ) : null)}
-                      </div>
+                        <div className="text-lightest_slate">
+                          {item.type === 'input' && (
+                            <span className="text-primary">{item.text}</span>
+                          )}
+                          {item.type === 'output' &&
+                            (item.kind === 'ghost' ? (
+                              <GhostDisplay />
+                            ) : item.text ? (
+                              item.animated ? (
+                                <TextType
+                                  text={[item.text]}
+                                  typingSpeed={35}
+                                  loop={false}
+                                  showCursor={false}
+                                  className="whitespace-pre text-lightest_slate"
+                                />
+                              ) : (
+                                <span className="whitespace-pre text-lightest_slate">
+                                  {item.text}
+                                </span>
+                              )
+                            ) : null)}
+                        </div>
+                      </React.Fragment>
                     ))}
-                    {phase === 'prompt' && (
-                      <div className="mt-2 flex flex-col gap-[2px] sm:gap-0.5 shrink-0 [contain:layout]">
+                    {phase === 'prompt' && history.length <= BOOT_LINES.length && (
+                      <div className="mt-1.5 sm:mt-2 flex flex-col gap-[2px] sm:gap-0.5 shrink-0 [contain:layout]">
                         {OPTIONS.map((opt) => (
                           <button
                             key={opt.id}
