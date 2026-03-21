@@ -42,7 +42,8 @@ const LinksAdmin: React.FC = () => {
         const url = links[type] || '';
         const { data: existing } = await supabase.from('links').select('id').eq('type', type).maybeSingle();
         if (existing) {
-          await supabase.from('links').update({ url }).eq('id', (existing as { id: string }).id);
+          const { error } = await supabase.from('links').update({ url }).eq('id', (existing as { id: string }).id).select().single();
+          if (error) throw error;
         } else if (url) {
           await supabase.from('links').insert({ type, url, sort_order: i });
         }

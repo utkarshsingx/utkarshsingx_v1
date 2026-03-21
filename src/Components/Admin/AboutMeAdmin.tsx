@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { supabase } from '../../lib/supabase';
-import type { AboutMeRow } from '../../hooks/usePortfolioData';
 import GlitchText from '../GlitchText';
 import AdminAddButton from './AdminAddButton';
 import AdminSaveButton from './AdminSaveButton';
@@ -19,6 +18,7 @@ const AboutMeAdmin: React.FC = () => {
   const [techInput, setTechInput] = useState('');
   const [profileFile, setProfileFile] = useState<File | null>(null);
   const [saving, setSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
   const [rowId, setRowId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -68,14 +68,20 @@ const AboutMeAdmin: React.FC = () => {
       if (profileUrl !== null) payload.profile_image_url = profileUrl;
 
       if (rowId) {
-        const { error } = await supabase.from('about_me').update(payload).eq('id', rowId);
+        const { error } = await supabase.from('about_me').update(payload).eq('id', rowId).select().single();
         if (error) throw error;
       } else {
-        const { data, error } = await supabase.from('about_me').insert(payload).select('id').single();
+        const { data: inserted, error } = await supabase
+          .from('about_me')
+          .insert(payload)
+          .select('id')
+          .single();
         if (error) throw error;
-        setRowId((data as { id: string }).id);
+        setRowId((inserted as { id: string }).id);
       }
       setProfileFile(null);
+      setSaveSuccess(true);
+      setTimeout(() => setSaveSuccess(false), 3000);
       await refetch();
     } catch (e) {
       console.error(e);
@@ -139,7 +145,7 @@ const AboutMeAdmin: React.FC = () => {
           accept="image/*"
           onFileChange={setProfileFile}
         />
-        <AdminSaveButton onClick={save} saving={saving} />
+        <AdminSaveButton onClick={save} saving={saving} success={saveSuccess} />
         </div>
       </div>
       <AdminPreview title="Public view">

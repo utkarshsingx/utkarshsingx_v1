@@ -37,10 +37,13 @@ const ProfileAdmin: React.FC = () => {
         .limit(1)
         .maybeSingle();
       if (existing) {
-        await supabase
+        const { error } = await supabase
           .from('about_me')
           .update({ profile_image_url: publicUrl })
-          .eq('id', (existing as { id: string }).id);
+          .eq('id', (existing as { id: string }).id)
+          .select()
+          .single();
+        if (error) throw error;
       } else {
         await supabase.from('about_me').insert({
           content: '',

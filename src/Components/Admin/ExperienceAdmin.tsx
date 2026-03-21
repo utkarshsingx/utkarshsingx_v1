@@ -56,7 +56,9 @@ const ExperienceAdmin: React.FC = () => {
         time_period: form.time_period,
         description: desc
       })
-      .eq('id', editing);
+      .eq('id', editing)
+      .select()
+      .single();
     if (error) {
       alert(error.message);
       return;

@@ -75,7 +75,9 @@ const ProjectsAdmin: React.FC = () => {
         git_link: form.git_link || null,
         link: form.link
       })
-      .eq('id', editing);
+      .eq('id', editing)
+      .select()
+      .single();
     if (error) {
       alert(error.message);
       return;

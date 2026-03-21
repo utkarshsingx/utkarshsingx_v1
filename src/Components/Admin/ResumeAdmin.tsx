@@ -33,10 +33,13 @@ const ResumeAdmin: React.FC = () => {
 
       const { data: existing } = await supabase.from('resume').select('id').limit(1).maybeSingle();
       if (existing) {
-        await supabase
+        const { error } = await supabase
           .from('resume')
           .update({ file_url: publicUrl, file_name: file.name })
-          .eq('id', (existing as { id: string }).id);
+          .eq('id', (existing as { id: string }).id)
+          .select()
+          .single();
+        if (error) throw error;
       } else {
         await supabase.from('resume').insert({ file_url: publicUrl, file_name: file.name });
       }

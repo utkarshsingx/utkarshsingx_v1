@@ -41,7 +41,7 @@ const ContactAdmin: React.FC = () => {
     try {
       const payload = { section_title: sectionTitle, body_text: bodyText, cta_label: ctaLabel, cta_url: ctaUrl };
       if (rowId) {
-        const { error } = await supabase.from('contact').update(payload).eq('id', rowId);
+        const { error } = await supabase.from('contact').update(payload).eq('id', rowId).select().single();
         if (error) throw error;
       } else {
         const { data, error } = await supabase.from('contact').insert(payload).select('id').single();
