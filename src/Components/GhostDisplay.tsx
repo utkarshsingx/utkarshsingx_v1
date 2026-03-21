@@ -77,14 +77,14 @@ const GhostDisplay: React.FC = () => {
   const showFallback = loading || error;
 
   return (
-    <div className="relative min-h-[160px] sm:min-h-[280px] w-full rounded overflow-hidden">
+    <div className="relative min-h-[70px] sm:min-h-[280px] w-full max-w-[200px] sm:max-w-none mx-auto rounded overflow-visible">
       <div
-        className="flex justify-center overflow-auto py-2"
+        className="flex justify-center overflow-visible py-0.5 sm:py-2"
         style={{ fontFamily: "'JetBrains Mono', monospace" }}
       >
         {showFallback ? (
           <motion.pre
-            className="font-mono text-[10px] sm:text-xs text-lightest_slate whitespace-pre text-center select-none"
+            className="font-mono text-[6px] sm:text-xs text-lightest_slate whitespace-pre text-center select-none leading-[1.1]"
             animate={{ y: [0, -4, 0] }}
             transition={{
               duration: 2,
@@ -95,7 +95,7 @@ const GhostDisplay: React.FC = () => {
             {FALLBACK_GHOST}
           </motion.pre>
         ) : (
-          <div className="text-[9px] sm:text-[10px] leading-tight text-center">
+          <div className="text-[6px] sm:text-[10px] leading-[1.1] text-center">
             {frames && renderFrame(frames[frameIndex] ?? '')}
           </div>
         )}

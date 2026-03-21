@@ -506,7 +506,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
         >
           <div className="sm-panel-inner flex-1 flex flex-col gap-5">
             <ul
-              className="sm-panel-list list-none m-0 p-0 flex flex-col gap-2"
+              className="sm-panel-list list-none m-0 p-0 flex flex-col gap-3 sm:gap-4"
               role="list"
               data-numbering={displayItemNumbering || undefined}
             >
@@ -516,7 +516,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
                     {onItemClick ? (
                       <button
                         type="button"
-                        className="sm-panel-item relative font-semibold font-sans text-lg sm:text-xl cursor-pointer leading-none tracking-tight uppercase transition-all duration-200 ease-out inline-block no-underline pr-[1.4em] text-left w-full bg-transparent border-0"
+                        className="sm-panel-item relative font-semibold font-sans text-xl sm:text-2xl cursor-pointer leading-none tracking-tight uppercase transition-all duration-200 ease-out inline-block no-underline pr-[1.4em] py-2 sm:py-2.5 text-left w-full bg-transparent border-0"
                         style={{ color: 'var(--sm-text)' }}
                         aria-label={it.ariaLabel}
                         data-index={idx + 1}
@@ -528,7 +528,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
                       </button>
                     ) : (
                       <a
-                        className="sm-panel-item relative font-semibold font-sans text-lg sm:text-xl cursor-pointer leading-none tracking-tight uppercase transition-all duration-200 ease-out inline-block no-underline pr-[1.4em]"
+                        className="sm-panel-item relative font-semibold font-sans text-xl sm:text-2xl cursor-pointer leading-none tracking-tight uppercase transition-all duration-200 ease-out inline-block no-underline pr-[1.4em] py-2 sm:py-2.5"
                         style={{ color: 'var(--sm-text)' }}
                         href={it.link}
                         aria-label={it.ariaLabel}
@@ -544,7 +544,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
                 ))
               ) : (
                 <li className="sm-panel-itemWrap relative overflow-hidden leading-none" aria-hidden="true">
-                  <span className="sm-panel-item relative font-semibold font-sans text-lg sm:text-xl leading-none tracking-tight uppercase inline-block no-underline pr-[1.4em]" style={{ color: 'var(--sm-text)' }}>
+                  <span className="sm-panel-item relative font-semibold font-sans text-xl sm:text-2xl leading-none tracking-tight uppercase inline-block no-underline pr-[1.4em] py-2 sm:py-2.5" style={{ color: 'var(--sm-text)' }}>
                     <span className="sm-panel-itemLabel inline-block [transform-origin:50%_100%] will-change-transform">
                       No items
                     </span>
@@ -610,8 +610,8 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 .sm-scope .sm-socials-list .sm-socials-link:focus-visible { opacity: 1; }
 .sm-scope .sm-socials-link { font-size: 0.875rem; font-weight: 500; color: var(--sm-text); text-decoration: none; position: relative; padding: 2px 0; display: inline-block; transition: color 0.2s, opacity 0.2s, text-shadow 0.2s; }
 .sm-scope .sm-socials-link:hover { color: var(--sm-accent); }
-.sm-scope .sm-panel-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
-.sm-scope .sm-panel-item { position: relative; color: var(--sm-text); font-weight: 600; font-size: 1.125rem; cursor: pointer; line-height: 1; letter-spacing: -0.02em; text-transform: uppercase; transition: color 0.2s, text-shadow 0.2s; display: inline-block; text-decoration: none; padding-right: 1.4em; text-shadow: 0 0 4px color-mix(in srgb, var(--sm-accent) 25%, transparent); }
+.sm-scope .sm-panel-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.875rem; }
+.sm-scope .sm-panel-item { position: relative; color: var(--sm-text); font-weight: 600; font-size: 1.25rem; cursor: pointer; line-height: 1; letter-spacing: -0.02em; text-transform: uppercase; transition: color 0.2s, text-shadow 0.2s; display: inline-block; text-decoration: none; padding-right: 1.4em; padding-top: 0.5rem; padding-bottom: 0.5rem; text-shadow: 0 0 4px color-mix(in srgb, var(--sm-accent) 25%, transparent); }
 .sm-scope .sm-panel-item:hover { color: var(--sm-accent); text-shadow: 0 0 10px var(--sm-accent), 0 0 20px color-mix(in srgb, var(--sm-accent) 45%, transparent); }
 .sm-scope .sm-socials-title { text-shadow: 0 0 6px color-mix(in srgb, var(--sm-accent) 35%, transparent); }
 .sm-scope .sm-socials-link { text-shadow: 0 0 4px color-mix(in srgb, var(--sm-accent) 20%, transparent); }
@@ -621,7 +621,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 .sm-scope .sm-panel-list[data-numbering] .sm-panel-item::after,
 .sm-scope .sm-panel-list[data-numbering] button.sm-panel-item::after { counter-increment: smItem; content: counter(smItem, decimal-leading-zero); position: absolute; top: 0.05em; right: 0.4em; font-size: 12px; font-weight: 400; font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace; color: var(--sm-accent); letter-spacing: 0; pointer-events: none; user-select: none; opacity: var(--sm-num-opacity, 0); text-shadow: 0 0 4px color-mix(in srgb, var(--sm-accent) 50%, transparent); }
 @media (max-width: 1024px) { .sm-scope .staggered-menu-panel { width: 100%; left: 0; right: 0; } .sm-scope .sm-prelayers { width: 100%; left: 0; right: 0; } }
-@media (max-width: 640px) { .sm-scope .staggered-menu-panel { width: 100%; left: 0; right: 0; padding: 4em 1.5em 2em 1.5em; } .sm-scope .sm-prelayers { width: 100%; left: 0; right: 0; } .sm-scope .sm-panel-item { font-size: 1rem; } }
+@media (max-width: 640px) { .sm-scope .staggered-menu-panel { width: 100%; left: 0; right: 0; padding: 4em 1.5em 2em 1.5em; } .sm-scope .sm-prelayers { width: 100%; left: 0; right: 0; } .sm-scope .sm-panel-list { gap: 1rem; } .sm-scope .sm-panel-item { font-size: 1.125rem; padding-top: 0.625rem; padding-bottom: 0.625rem; } }
       `}</style>
     </div>
   );

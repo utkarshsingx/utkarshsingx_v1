@@ -18,7 +18,7 @@ const Contact: React.FC<ContactProps> = ({ sectionIndex = '05' }) => {
       <div className='w-full flex justify-center'>
         <Heading index={sectionIndex} title={contact.section_title} />
       </div>
-      <div className='text-lightest_slate text-sm sm:text-base mt-4 sm:mt-6 mb-6 sm:mb-8 md:mb-12 max-w-[720px] w-full text-left'>
+      <div className='text-lightest_slate text-sm sm:text-base mt-4 sm:mt-6 mb-6 sm:mb-8 md:mb-12 max-w-[720px] w-full text-center sm:text-left'>
         {contact.body_text}
       </div>
       <a href={contact.cta_url} target='_blank' rel='noreferrer' className='mt-4'>

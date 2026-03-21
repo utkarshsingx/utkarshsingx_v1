@@ -38,6 +38,18 @@ const COWSAY_MESSAGES = [
   'Have you tried turning it off and on again?',
 ];
 
+const MYSTERY_DECODES = [
+  '> DECODING...\n> Cipher: ROT13 × Caesar × ???\n> Result: "The backdoor was inside you all along."',
+  '> Signal intercepted.\n> Frequency: 13.37 MHz\n> Message: "They know."',
+  '> Decrypting quantum stream...\n> Key found: curiosity\n> Plaintext: "Welcome, initiate."',
+];
+
+const HACK_OUTPUTS = [
+  '> Scanning neural pathways...\n> Firewall: CRITICAL\n> Bypass: curiosity.exe\n> Access level: YOU ARE IN.',
+  '> Initiating hack sequence...\n> [████████████████████] 100%\n> Mainframe accessed. You\'re cleared.',
+  '> Running exploit chain...\n> CVE-31337: BACKDOOR_FOUND\n> Privilege: ROOT (you earned it)',
+];
+
 const BOOT_LINES = [
   '[UTKARSH_SYS v2.0] Booting secure shell...',
   '[OK] Memory: 16GB | Cores: 8 | Caffeine: Low',
@@ -207,7 +219,92 @@ export const SecretTerminal: React.FC<SecretTerminalProps> = ({ onClose }) => {
           ...h,
           {
             type: 'output',
-            text: 'Commands: 1-5 (quick actions)\n  help | clear | whoami | ls | date | uname | fortune\n  cowsay | top | ping | neofetch | git status | echo | :q!\n  ↑↓ arrow keys for command history',
+            text: 'Commands: 1-5 (quick actions)\n  help | clear | whoami | ls | date | uname | fortune\n  cowsay | top | ping | neofetch | git status | echo | :q!\n  decode | hack | 42 | summon | uptime | env | banner\n  ↑↓ arrow keys for command history',
+            animated: true
+          }
+        ]);
+      } else if (lower === 'decode' || lower === 'decrypt') {
+        const msg = MYSTERY_DECODES[Math.floor(Math.random() * MYSTERY_DECODES.length)];
+        setHistory((h) => [...h, { type: 'output', text: msg, animated: true }]);
+      } else if (lower === 'hack' || lower === 'hackerman' || lower === 'hack the planet') {
+        const msg = HACK_OUTPUTS[Math.floor(Math.random() * HACK_OUTPUTS.length)];
+        setHistory((h) => [...h, { type: 'output', text: msg, animated: true }]);
+      } else if (lower === '42' || lower === 'the answer') {
+        setHistory((h) => [
+          ...h,
+          {
+            type: 'output',
+            text: "> Deep Thought has computed.\n> The Answer to the Ultimate Question of Life, the Universe, and Everything is...\n> 42\n> (The question remains unknown. Keep searching.)",
+            animated: true
+          }
+        ]);
+      } else if (lower === 'summon' || lower.startsWith('summon ')) {
+        const targets = ['ghost', 'coffee', 'the matrix', 'Jarvis', 'curiosity'];
+        const t = targets[Math.floor(Math.random() * targets.length)];
+        setHistory((h) => [
+          ...h,
+          {
+            type: 'output',
+            text: `> Invoking ritual...\n> Chanting: sudo apt install ${t}\n> Summoning ${t}...\n> ${t} has entered the chat. Try option ${targets.indexOf(t) + 1}.`,
+            animated: true
+          }
+        ]);
+      } else if (lower === 'open sesame' || lower === 'sesame') {
+        setHistory((h) => [
+          ...h,
+          {
+            type: 'output',
+            text: '> Cave entrance: DENIED\n> Aladdin\'s cave requires a different passphrase.\n> Hint: Try "Jarvis" (option 2) for treasure.',
+            animated: true
+          }
+        ]);
+      } else if (lower === 'uptime') {
+        const mins = Math.floor(Math.random() * 99) + 42;
+        setHistory((h) => [
+          ...h,
+          {
+            type: 'output',
+            text: `  ${mins}:23:45 up ${Math.floor(mins / 60)} days,  ${mins % 60} min\n  Load average: 0.00, 0.01, 0.00\n  (Backdoor has been waiting for you.)`,
+            animated: true
+          }
+        ]);
+      } else if (lower === 'env' || lower === 'printenv') {
+        setHistory((h) => [
+          ...h,
+          {
+            type: 'output',
+            text: 'SECRET_LEVEL=unlocked\nCURIOSITY_MODE=active\nBACKDOOR_KEY=***REDACTED***\nHACKER_RANK=initiate',
+            animated: true
+          }
+        ]);
+      } else if (lower === 'banner' || lower.startsWith('banner ')) {
+        const word = (trimmed.slice(7).trim() || 'BACKDOOR').toUpperCase();
+        const banner = `\n  ==================\n  ||  ${word.slice(0, 12)}  ||\n  ==================\n  [secret terminal banner]\n`;
+        setHistory((h) => [...h, { type: 'output', text: banner, animated: true }]);
+      } else if (lower === 'who' || lower === 'w') {
+        setHistory((h) => [
+          ...h,
+          {
+            type: 'output',
+            text: 'USER     TTY      LOGIN@   IDLE   JOB\nroot     pts/0    12:34    0.00   backdoor\nyou      pts/1    ??       ?      curiosity\n\n  Someone\'s always watching. 👁',
+            animated: true
+          }
+        ]);
+      } else if (lower === 'trace' || lower === 'traceroute') {
+        setHistory((h) => [
+          ...h,
+          {
+            type: 'output',
+            text: 'traceroute to nexus.local (10.0.0.42)\n 1  gateway 0.042 ms\n 2  router.void 0.089 ms\n 3  nexus.local 0.133 ms\n\n  You\'re getting warmer...',
+            animated: true
+          }
+        ]);
+      } else if (lower === 'init 6' || lower === 'reboot') {
+        setHistory((h) => [
+          ...h,
+          {
+            type: 'output',
+            text: '> Init 6 requested.\n> Backdoor does not reboot. It persists.\n> (Use :q! or close button to exit)',
             animated: true
           }
         ]);
@@ -358,7 +455,7 @@ export const SecretTerminal: React.FC<SecretTerminalProps> = ({ onClose }) => {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 4 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="relative z-20 w-full max-w-2xl h-[90dvh] sm:h-auto sm:max-h-[85vh] flex flex-col"
+            className="relative z-20 w-full max-w-2xl max-h-[52vh] sm:max-h-[70vh] flex flex-col"
           >
             <div
               className="relative overflow-hidden rounded-xl sm:rounded-2xl border border-[var(--theme-border,#233554)] bg-[var(--theme-bg,#0a192f)] shadow-2xl shadow-primary/5 ring-1 ring-slate-600/20 flex flex-1 flex-col min-h-0"
@@ -371,23 +468,23 @@ export const SecretTerminal: React.FC<SecretTerminalProps> = ({ onClose }) => {
                   background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.3) 2px, rgba(0,0,0,0.3) 4px)'
                 }}
               />
-              <div className="relative z-20 flex items-center justify-between border-b border-[var(--theme-border,#233554)] bg-slate-900/50 px-3 sm:px-4 py-2.5 sm:py-3 shrink-0">
+              <div className="relative z-20 flex items-center justify-between border-b border-[var(--theme-border,#233554)] bg-slate-900/50 px-4 py-3 shrink-0">
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
                     onClick={onClose}
-                    className="min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 h-11 w-11 sm:h-2.5 sm:w-2.5 rounded-full bg-red-500 transition-opacity hover:opacity-80 cursor-pointer flex items-center justify-center -m-1 sm:m-0"
+                    className="h-2.5 w-2.5 rounded-full bg-red-500 transition-opacity hover:opacity-80 cursor-pointer"
                     aria-label="Close"
                   />
-                  <div className="h-2.5 w-2.5 rounded-full bg-yellow-500 hidden sm:block" />
-                  <div className="h-2.5 w-2.5 rounded-full bg-green-500 hidden sm:block" />
+                  <div className="h-2.5 w-2.5 rounded-full bg-yellow-500" />
+                  <div className="h-2.5 w-2.5 rounded-full bg-green-500" />
                 </div>
-                <span className="text-[10px] sm:text-xs font-mono text-slate-500 truncate max-w-[180px] sm:max-w-none">secret-terminal — backdoor v2.0</span>
+                <span className="text-xs font-mono text-slate-500">secret-terminal — backdoor v2.0</span>
               </div>
 
-              <div className="relative z-20 flex-1 min-h-0 overflow-y-auto overflow-x-hidden p-3 sm:p-4 overscroll-contain">
+              <div className="relative z-20 flex-1 min-h-0 overflow-y-auto overflow-x-hidden p-3 sm:p-4 overscroll-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 {phase === 'boot' && (
-                  <div className="grid gap-y-1 text-xs sm:text-sm font-mono text-lightest_slate break-words">
+                  <div className="grid gap-y-0.5 sm:gap-y-1 text-xs sm:text-sm font-mono text-lightest_slate break-words">
                     {BOOT_SEQUENCE.map((line, i) =>
                       i === 0 ? (
                         <div key={i}>
@@ -423,7 +520,7 @@ export const SecretTerminal: React.FC<SecretTerminalProps> = ({ onClose }) => {
                 )}
 
                 {phase !== 'boot' && (
-                  <div className="grid gap-y-1 text-xs sm:text-sm break-words">
+                  <div className="grid gap-y-0.5 sm:gap-y-1 text-xs sm:text-sm break-words min-h-0">
                     {history.map((item, i) => (
                       <div key={i} className="text-lightest_slate">
                         {item.type === 'input' && (
@@ -450,13 +547,13 @@ export const SecretTerminal: React.FC<SecretTerminalProps> = ({ onClose }) => {
                       </div>
                     ))}
                     {phase === 'prompt' && (
-                      <div className="mt-2 flex flex-col gap-1 sm:gap-0.5">
+                      <div className="mt-2 flex flex-col gap-[2px] sm:gap-0.5 shrink-0 [contain:layout]">
                         {OPTIONS.map((opt) => (
                           <button
                             key={opt.id}
                             type="button"
                             onClick={() => handleOptionSelect(opt.action)}
-                            className="w-full sm:w-fit min-h-[44px] sm:min-h-0 py-2.5 sm:py-0.5 px-3 sm:px-0 -mx-3 sm:mx-0 rounded-lg sm:rounded-none text-left font-mono text-sm sm:text-base text-lightest_slate transition-colors hover:text-primary hover:bg-slate-800/50 sm:hover:bg-transparent active:bg-slate-700/50 sm:active:bg-transparent"
+                            className="w-full sm:w-fit h-8 sm:h-auto min-h-0 py-0 sm:py-0.5 px-2 sm:px-0 -mx-2 sm:mx-0 rounded sm:rounded-none text-left font-mono text-sm sm:text-base leading-tight text-lightest_slate transition-colors hover:text-primary hover:bg-slate-800/50 sm:hover:bg-transparent active:bg-slate-700/50 sm:active:bg-transparent flex items-center"
                           >
                             {opt.label}
                           </button>
