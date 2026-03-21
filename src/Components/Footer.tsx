@@ -1,11 +1,11 @@
-import React, { Suspense, useMemo, useSyncExternalStore } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { Suspense, useMemo, useState, useSyncExternalStore } from 'react';
 import { FaXTwitter } from 'react-icons/fa6';
 import { FiGithub, FiLinkedin } from 'react-icons/fi';
 import WaveBackground from './WaveBackground';
 import Contact from './Contact';
 import { useTheme } from '../context/ThemeContext';
-import { useAuth } from '../context/AuthContext';
+import { SecretTerminal } from './SecretTerminal';
+import { SecretTerminalErrorBoundary } from './SecretTerminalErrorBoundary';
 import { usePortfolioDataContext } from '../context/PortfolioDataContext';
 
 function useFooterWaveColor(): [number, number, number] {
@@ -57,18 +57,13 @@ const Footer: React.FC = () => {
   const waveColor = useFooterWaveColor();
   const primaryColor = usePrimaryColor();
   const isMobile = useIsMobile();
-  const navigate = useNavigate();
-  const { isAdmin, signInWithGoogle } = useAuth();
+  const [showSecretTerminal, setShowSecretTerminal] = useState(false);
   const { data } = usePortfolioDataContext();
   const footerLinks = data.links.filter((l) => l.type !== 'email');
   const showContact = data.siteSections.find((s) => s.key === 'contact')?.enabled ?? true;
 
   const handleBuiltByClick = () => {
-    if (isAdmin) {
-      navigate('/admin');
-    } else {
-      signInWithGoogle();
-    }
+    setShowSecretTerminal(true);
   };
 
   return (
@@ -130,6 +125,11 @@ const Footer: React.FC = () => {
           {' '}with 🖤
         </p>
       </div>
+      {showSecretTerminal && (
+        <SecretTerminalErrorBoundary onClose={() => setShowSecretTerminal(false)}>
+          <SecretTerminal onClose={() => setShowSecretTerminal(false)} />
+        </SecretTerminalErrorBoundary>
+      )}
     </footer>
   );
 };
