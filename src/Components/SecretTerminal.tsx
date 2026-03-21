@@ -346,7 +346,7 @@ export const SecretTerminal: React.FC<SecretTerminalProps> = ({ onClose }) => {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm p-2 sm:p-4 pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]"
       role="dialog"
       aria-modal="true"
       aria-label="Secret terminal"
@@ -358,10 +358,10 @@ export const SecretTerminal: React.FC<SecretTerminalProps> = ({ onClose }) => {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 4 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="relative z-20 w-full max-w-2xl"
+            className="relative z-20 w-full max-w-2xl h-[90dvh] sm:h-auto sm:max-h-[85vh] flex flex-col"
           >
             <div
-              className="relative overflow-hidden rounded-2xl border border-[var(--theme-border,#233554)] bg-[var(--theme-bg,#0a192f)] shadow-2xl shadow-primary/5 ring-1 ring-slate-600/20"
+              className="relative overflow-hidden rounded-xl sm:rounded-2xl border border-[var(--theme-border,#233554)] bg-[var(--theme-bg,#0a192f)] shadow-2xl shadow-primary/5 ring-1 ring-slate-600/20 flex flex-1 flex-col min-h-0"
               style={{ fontFamily: "'JetBrains Mono', 'Fira Code', monospace" }}
             >
               {/* CRT scanline overlay */}
@@ -371,23 +371,23 @@ export const SecretTerminal: React.FC<SecretTerminalProps> = ({ onClose }) => {
                   background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.3) 2px, rgba(0,0,0,0.3) 4px)'
                 }}
               />
-              <div className="relative z-20 flex items-center justify-between border-b border-[var(--theme-border,#233554)] bg-slate-900/50 px-4 py-3">
+              <div className="relative z-20 flex items-center justify-between border-b border-[var(--theme-border,#233554)] bg-slate-900/50 px-3 sm:px-4 py-2.5 sm:py-3 shrink-0">
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
                     onClick={onClose}
-                    className="h-2.5 w-2.5 rounded-full bg-red-500 transition-opacity hover:opacity-80 cursor-pointer"
+                    className="min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 h-11 w-11 sm:h-2.5 sm:w-2.5 rounded-full bg-red-500 transition-opacity hover:opacity-80 cursor-pointer flex items-center justify-center -m-1 sm:m-0"
                     aria-label="Close"
                   />
-                  <div className="h-2.5 w-2.5 rounded-full bg-yellow-500" />
-                  <div className="h-2.5 w-2.5 rounded-full bg-green-500" />
+                  <div className="h-2.5 w-2.5 rounded-full bg-yellow-500 hidden sm:block" />
+                  <div className="h-2.5 w-2.5 rounded-full bg-green-500 hidden sm:block" />
                 </div>
-                <span className="text-xs font-mono text-slate-500">secret-terminal — backdoor v2.0</span>
+                <span className="text-[10px] sm:text-xs font-mono text-slate-500 truncate max-w-[180px] sm:max-w-none">secret-terminal — backdoor v2.0</span>
               </div>
 
-              <div className="relative z-20 max-h-[70vh] overflow-y-auto p-4">
+              <div className="relative z-20 flex-1 min-h-0 overflow-y-auto overflow-x-hidden p-3 sm:p-4 overscroll-contain">
                 {phase === 'boot' && (
-                  <div className="grid gap-y-1 text-sm font-mono text-lightest_slate">
+                  <div className="grid gap-y-1 text-xs sm:text-sm font-mono text-lightest_slate break-words">
                     {BOOT_SEQUENCE.map((line, i) =>
                       i === 0 ? (
                         <div key={i}>
@@ -423,7 +423,7 @@ export const SecretTerminal: React.FC<SecretTerminalProps> = ({ onClose }) => {
                 )}
 
                 {phase !== 'boot' && (
-                  <div className="grid gap-y-1 text-sm">
+                  <div className="grid gap-y-1 text-xs sm:text-sm break-words">
                     {history.map((item, i) => (
                       <div key={i} className="text-lightest_slate">
                         {item.type === 'input' && (
@@ -450,13 +450,13 @@ export const SecretTerminal: React.FC<SecretTerminalProps> = ({ onClose }) => {
                       </div>
                     ))}
                     {phase === 'prompt' && (
-                      <div className="mt-2 flex flex-col gap-1">
+                      <div className="mt-2 flex flex-col gap-1 sm:gap-0.5">
                         {OPTIONS.map((opt) => (
                           <button
                             key={opt.id}
                             type="button"
                             onClick={() => handleOptionSelect(opt.action)}
-                            className="w-fit text-left font-mono text-lightest_slate transition-colors hover:text-primary"
+                            className="w-full sm:w-fit min-h-[44px] sm:min-h-0 py-2.5 sm:py-0.5 px-3 sm:px-0 -mx-3 sm:mx-0 rounded-lg sm:rounded-none text-left font-mono text-sm sm:text-base text-lightest_slate transition-colors hover:text-primary hover:bg-slate-800/50 sm:hover:bg-transparent active:bg-slate-700/50 sm:active:bg-transparent"
                           >
                             {opt.label}
                           </button>
@@ -469,23 +469,26 @@ export const SecretTerminal: React.FC<SecretTerminalProps> = ({ onClose }) => {
               </div>
 
               {(phase === 'prompt' || phase === 'ghost' || phase === 'coffee' || phase === 'matrix') && (
-                <div className="relative z-20">
+                <div className="relative z-20 shrink-0">
                   <form
                     onSubmit={handleInputSubmit}
-                    className="border-t border-[var(--theme-border,#233554)] bg-slate-900/30 px-4 py-3"
+                    className="border-t border-[var(--theme-border,#233554)] bg-slate-900/30 px-3 sm:px-4 py-3 sm:py-3"
                   >
-                    <div className="flex items-center gap-2">
-                      <span className="text-primary font-bold">{'>'}</span>
+                    <div className="flex items-center gap-2 min-h-[44px]">
+                      <span className="text-primary font-bold shrink-0">{'>'}</span>
                       <input
                         ref={inputRef}
                         type="text"
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
                         placeholder="Type 1-5 or help, whoami, ls..."
-                        className="flex-1 bg-transparent font-mono text-sm text-lightest_slate outline-none placeholder:text-slate caret-primary"
+                        className="flex-1 min-w-0 bg-transparent font-mono text-base sm:text-sm text-lightest_slate outline-none placeholder:text-slate caret-primary"
                         autoFocus
+                        autoComplete="off"
+                        autoCorrect="off"
+                        autoCapitalize="off"
                       />
-                      <span className="animate-pulse text-primary">▋</span>
+                      <span className="animate-pulse text-primary shrink-0">▋</span>
                     </div>
                   </form>
                 </div>

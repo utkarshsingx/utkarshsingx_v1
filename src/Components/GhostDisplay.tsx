@@ -77,7 +77,7 @@ const GhostDisplay: React.FC = () => {
   const showFallback = loading || error;
 
   return (
-    <div className="relative min-h-[280px] w-full rounded overflow-hidden">
+    <div className="relative min-h-[160px] sm:min-h-[280px] w-full rounded overflow-hidden">
       <div
         className="flex justify-center overflow-auto py-2"
         style={{ fontFamily: "'JetBrains Mono', monospace" }}
