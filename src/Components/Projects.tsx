@@ -5,7 +5,11 @@ import { FiGithub, FiLink } from 'react-icons/fi';
 import { usePortfolioDataContext } from '../context/PortfolioDataContext';
 import type { ProjectRow } from '../hooks/usePortfolioData';
 
-const Projects: React.FC = () => {
+interface ProjectsProps {
+  sectionIndex?: string;
+}
+
+const Projects: React.FC<ProjectsProps> = ({ sectionIndex = '04' }) => {
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-50px' });
   const { data } = usePortfolioDataContext();
@@ -23,7 +27,7 @@ const Projects: React.FC = () => {
       id='projects'
     >
       <div className='mb-6 sm:mb-8 md:mb-12'>
-        <Heading index={'04'} title={"Some Things I've Built"} />
+        <Heading index={sectionIndex} title={"Some Things I've Built"} />
       </div>
       {projects?.map((item, index) => (
         <a key={item.id} href={item.link} target='_blank' rel='noreferrer'>

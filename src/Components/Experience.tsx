@@ -3,7 +3,11 @@ import Heading from '../ui/Heading';
 import { usePortfolioDataContext } from '../context/PortfolioDataContext';
 import type { ExperienceRow } from '../hooks/usePortfolioData';
 
-const Experience: React.FC = () => {
+interface ExperienceProps {
+  sectionIndex?: string;
+}
+
+const Experience: React.FC<ExperienceProps> = ({ sectionIndex = '02' }) => {
   const { data } = usePortfolioDataContext();
   const experience = data.experience;
   const [selectedJob, setselectedJob] = useState<ExperienceRow | null>(null);
@@ -18,7 +22,7 @@ const Experience: React.FC = () => {
 
   return (
     <div className='mt-14 sm:mt-24 md:mt-32 lg:mt-44 min-w-0' id='experience'>
-      <Heading index={'02'} title={"Where I've Worked"} />
+      <Heading index={sectionIndex} title={"Where I've Worked"} />
       <div className='flex mt-5 sm:mt-6 md:flex-row flex-col gap-6 sm:gap-8'>
         <div className='flex mr-0 sm:mr-4 md:mr-8 flex-row md:flex-col overflow-x-auto pb-2 md:pb-0 gap-0 md:gap-0 -mx-4 px-4 sm:mx-0 sm:px-0 touch-pan-x'>
           {experience?.map((item) => (

@@ -27,7 +27,11 @@ const formatTooltipDate = (dateStr: string) => {
 const GITHUB_USER = 'utkarshsingx';
 const CONTRIB_API = `https://github-contributions-api.jogruber.de/v4/${GITHUB_USER}?y=last`;
 
-const Contributions: React.FC = () => {
+interface ContributionsProps {
+  sectionIndex?: string;
+}
+
+const Contributions: React.FC<ContributionsProps> = ({ sectionIndex = '03' }) => {
   const { theme } = useTheme();
   const isMobile = useIsMobile();
   const [totalContributions, setTotalContributions] = useState<number | null>(null);
@@ -44,7 +48,7 @@ const Contributions: React.FC = () => {
 
   return (
     <div className='mt-14 sm:mt-24 md:mt-32 lg:mt-44 min-w-0 w-full px-1 sm:px-0' id='contributions'>
-      <Heading index={'03'} title={'My Contributions'} />
+      <Heading index={sectionIndex} title={'My Contributions'} />
       <p className='text-lightest_slate mt-4 sm:mt-6 mb-6 sm:mb-8 text-sm sm:text-base md:text-lg font-light max-w-2xl leading-relaxed'>
         <span className='text-primary font-medium'>When I&apos;m not answering,</span> I&apos;m probably{' '}
         <DecryptedText

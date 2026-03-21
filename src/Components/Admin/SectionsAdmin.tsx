@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { FiMoreVertical } from 'react-icons/fi';
 import { supabase } from '../../lib/supabase';
 import type { SiteSectionRow } from '../../hooks/usePortfolioData';
 import GlitchText from '../GlitchText';
@@ -20,21 +21,24 @@ const DEFAULT_SECTIONS = [
 const SectionsAdmin: React.FC = () => {
   const { data, loading, error, refetch } = usePortfolioDataContext();
   const [sections, setSections] = useState<SiteSectionRow[]>([]);
-  const [initialSections, setInitialSections] = useState<Map<string, boolean>>(new Map());
+  const [initialSections, setInitialSections] = useState<Map<string, { enabled: boolean; sortOrder: number }>>(new Map());
   const [saving, setSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
+  const [draggedId, setDraggedId] = useState<string | null>(null);
 
   useEffect(() => {
-    const loaded = data.siteSections;
+    const loaded = data?.siteSections ?? [];
     if (loaded.length > 0) {
-      setSections(loaded);
-      setInitialSections(new Map(loaded.map((s) => [s.id, s.enabled])));
+      const sorted = [...loaded].sort((a, b) => a.sort_order - b.sort_order);
+      setSections(sorted);
+      setInitialSections(new Map(sorted.map((s) => [s.id, { enabled: s.enabled, sortOrder: s.sort_order }])));
     }
   }, [data.siteSections]);
 
   useEffect(() => {
     if (loading || error) return;
-    if (data.siteSections.length === 0) {
+    const siteSections = data?.siteSections ?? [];
+    if (siteSections.length === 0) {
       (async () => {
         const { data: inserted, error: insertErr } = await supabase
           .from('site_sections')
@@ -45,16 +49,57 @@ const SectionsAdmin: React.FC = () => {
         }
       })();
     }
-  }, [loading, error, data.siteSections.length, refetch]);
+  }, [loading, error, data?.siteSections?.length, refetch]);
 
   const toggle = (id: string, enabled: boolean) => {
     setSections((prev) => prev.map((s) => (s.id === id ? { ...s, enabled } : s)));
     setSaveSuccess(false);
   };
 
+  const reorder = (fromIndex: number, toIndex: number) => {
+    if (fromIndex === toIndex) return;
+    setSections((prev) => {
+      const copy = [...prev];
+      const [removed] = copy.splice(fromIndex, 1);
+      copy.splice(toIndex, 0, removed);
+      return copy.map((s, i) => ({ ...s, sort_order: i }));
+    });
+    setSaveSuccess(false);
+  };
+
+  const handleDragStart = (e: React.DragEvent, id: string) => {
+    setDraggedId(id);
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', id);
+    e.dataTransfer.setData('application/json', JSON.stringify({ type: 'section', id }));
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+  };
+
+  const handleDrop = (e: React.DragEvent, targetIndex: number) => {
+    e.preventDefault();
+    setDraggedId(null);
+    const id = e.dataTransfer.getData('text/plain');
+    const fromIndex = sections.findIndex((s) => s.id === id);
+    if (fromIndex === -1) return;
+    reorder(fromIndex, targetIndex);
+  };
+
+  const handleDragEnd = () => {
+    setDraggedId(null);
+  };
+
+  const hasChanges = () => {
+    const enabledChanged = sections.some((s) => initialSections.get(s.id)?.enabled !== s.enabled);
+    const orderChanged = sections.some((s, i) => initialSections.get(s.id)?.sortOrder !== i);
+    return enabledChanged || orderChanged;
+  };
+
   const save = async () => {
-    const changed = sections.filter((s) => initialSections.get(s.id) !== s.enabled);
-    if (changed.length === 0) {
+    if (!hasChanges()) {
       setSaveSuccess(true);
       setTimeout(() => setSaveSuccess(false), 2000);
       return;
@@ -63,11 +108,21 @@ const SectionsAdmin: React.FC = () => {
     setSaving(true);
     setSaveSuccess(false);
     try {
-      for (const s of changed) {
-        const { error } = await supabase.from('site_sections').update({ enabled: s.enabled }).eq('id', s.id);
-        if (error) throw error;
+      for (let i = 0; i < sections.length; i++) {
+        const s = sections[i];
+        const initial = initialSections.get(s.id);
+        const needsUpdate = initial?.enabled !== s.enabled || initial?.sortOrder !== i;
+        if (needsUpdate) {
+          const { error } = await supabase
+            .from('site_sections')
+            .update({ enabled: s.enabled, sort_order: i })
+            .eq('id', s.id)
+            .select()
+            .single();
+          if (error) throw error;
+        }
       }
-      setInitialSections(new Map(sections.map((s) => [s.id, s.enabled])));
+      setInitialSections(new Map(sections.map((s, i) => [s.id, { enabled: s.enabled, sortOrder: i }])));
       await refetch();
       setSaveSuccess(true);
       setTimeout(() => setSaveSuccess(false), 3000);
@@ -90,7 +145,7 @@ const SectionsAdmin: React.FC = () => {
           Sections
         </GlitchText>
       </div>
-      <p className="text-slate-400 text-sm mb-6">Toggle which sections are visible on the homepage.</p>
+      <p className="text-slate-400 text-sm mb-6">Drag to reorder, toggle to show/hide. Click Save to apply changes.</p>
       {saveSuccess && (
         <div className="mb-4 p-3 rounded-lg bg-primary/20 text-primary text-sm flex items-center justify-between">
           <span>Saved! Changes will reflect on the homepage.</span>
@@ -98,40 +153,68 @@ const SectionsAdmin: React.FC = () => {
         </div>
       )}
       <div className="space-y-3">
-        {sections.map((s) => (
-          <div
-            key={s.id}
-            className="flex items-center justify-between rounded-lg border border-slate-700/50 bg-slate-800/30 px-4 py-3 transition-colors hover:border-slate-600"
-          >
-            <span className="text-lightest_slate capitalize font-medium">{s.key}</span>
-            <AdminCheckbox
-              checked={s.enabled}
-              onChange={(e) => toggle(s.id, e.target.checked)}
-              label={s.enabled ? 'Visible' : 'Hidden'}
-            />
-          </div>
-        ))}
+        {[...sections]
+          .sort((a, b) => a.sort_order - b.sort_order)
+          .map((s, index) => (
+            <div
+              key={s.id}
+              draggable
+              onDragStart={(e) => handleDragStart(e, s.id)}
+              onDragOver={handleDragOver}
+              onDrop={(e) => handleDrop(e, index)}
+              onDragEnd={handleDragEnd}
+              className={`flex items-center gap-3 rounded-lg border px-4 py-3 transition-all cursor-grab active:cursor-grabbing select-none ${
+                draggedId === s.id
+                  ? 'border-primary/60 bg-primary/10 opacity-80'
+                  : 'border-slate-700/50 bg-slate-800/30 hover:border-slate-600'
+              }`}
+            >
+              <div
+                className="touch-none flex-shrink-0 text-slate-500 hover:text-lightest_slate transition-colors"
+                aria-label="Drag to reorder"
+              >
+                <FiMoreVertical size={18} />
+              </div>
+              <span className="flex-1 text-lightest_slate capitalize font-medium">{s.key}</span>
+              <AdminCheckbox
+                checked={s.enabled}
+                onChange={(e) => toggle(s.id, e.target.checked)}
+                label={s.enabled ? 'Visible' : 'Hidden'}
+              />
+            </div>
+          ))}
       </div>
       <AdminSaveButton onClick={save} saving={saving} success={saveSuccess} className="mt-6" />
       </div>
       <AdminPreview title="Homepage layout">
         <div className="space-y-2">
-          <p className="text-slate-400 text-sm mb-4">Sections visible on the homepage:</p>
+          <p className="text-slate-400 text-sm mb-4">Sections on the homepage (order no. is dynamic—hidden sections are skipped):</p>
           {sections.length > 0 ? (
             <div className="flex flex-col gap-2">
-              {sections.map((s) => (
-                <div
-                  key={s.id}
-                  className={`flex items-center justify-between px-3 py-2 rounded ${
-                    s.enabled ? 'bg-primary/10 border border-primary/30' : 'bg-slate-800/50 border border-slate-700/50 opacity-60'
-                  }`}
-                >
-                  <span className="capitalize text-lightest_slate">{s.key}</span>
-                  <span className={`text-xs ${s.enabled ? 'text-primary' : 'text-slate-500'}`}>
-                    {s.enabled ? 'Visible' : 'Hidden'}
-                  </span>
-                </div>
-              ))}
+              {[...sections]
+                .sort((a, b) => a.sort_order - b.sort_order)
+                .map((s) => {
+                  const enabledBefore = sections
+                    .filter((x) => x.sort_order < s.sort_order)
+                    .filter((x) => x.enabled).length;
+                  const orderNo = s.enabled ? String(enabledBefore + 1).padStart(2, '0') : '—';
+                  return (
+                    <div
+                      key={s.id}
+                      className={`flex items-center justify-between px-3 py-2 rounded ${
+                        s.enabled ? 'bg-primary/10 border border-primary/30' : 'bg-slate-800/50 border border-slate-700/50 opacity-60'
+                      }`}
+                    >
+                      <span className="capitalize text-lightest_slate">
+                        {s.enabled && <span className="font-mono text-primary mr-2">{orderNo}.</span>}
+                        {s.key}
+                      </span>
+                      <span className={`text-xs ${s.enabled ? 'text-primary' : 'text-slate-500'}`}>
+                        {s.enabled ? 'Visible' : 'Hidden'}
+                      </span>
+                    </div>
+                  );
+                })}
             </div>
           ) : (
             <p className="text-slate-500 italic">No sections configured</p>

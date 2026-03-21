@@ -4,7 +4,11 @@ import PixelTransition from './PixelTransition';
 import profileImageFallback from '../Assets/Images/profile.png';
 import { usePortfolioDataContext } from '../context/PortfolioDataContext';
 
-export const AboutMe: React.FC = () => {
+interface AboutMeProps {
+  sectionIndex?: string;
+}
+
+export const AboutMe: React.FC<AboutMeProps> = ({ sectionIndex = '01' }) => {
   const [isHovered, setisHovered] = useState(false);
   const { data } = usePortfolioDataContext();
   const about = data.aboutMe;
@@ -15,8 +19,8 @@ export const AboutMe: React.FC = () => {
   const paragraphs = about.content.split('\n\n').filter(Boolean);
 
   return (
-    <div className='text-lightest_slate text-sm sm:text-base md:text-lg min-w-0' id='about'>
-      <Heading index={'01'} title={'About Me'} />
+    <div className='mt-14 sm:mt-24 md:mt-32 lg:mt-44 text-lightest_slate text-sm sm:text-base md:text-lg min-w-0 w-full' id='about'>
+      <Heading index={sectionIndex} title={'About Me'} />
       <div className='flex mt-6 sm:mt-8 flex-col lg:flex-row gap-8 sm:gap-10 md:gap-12 items-center'>
         <div className='max-w-[540px] w-full'>
           <div>

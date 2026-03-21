@@ -26,10 +26,11 @@ const Contributions = lazy(() => import('./Components/Contributions'));
 const Projects = lazy(() => import('./Components/Projects'));
 const Footer = lazy(() => import('./Components/Footer'));
 
+const SECTION_KEYS = ['about', 'experience', 'contributions', 'projects'] as const;
+
 function HomePageContent() {
   const { data, loading } = usePortfolioDataContext();
-  const sections = data.siteSections;
-  const isEnabled = (key: string) => sections.find((s) => s.key === key)?.enabled ?? true;
+  const siteSections = data?.siteSections ?? [];
 
   if (loading) {
     return (
@@ -39,13 +40,29 @@ function HomePageContent() {
     );
   }
 
+  const enabledOrdered = SECTION_KEYS
+    .map((key) => siteSections.find((s) => s.key === key))
+    .filter((s): s is NonNullable<typeof s> => !!s && s.enabled)
+    .sort((a, b) => a.sort_order - b.sort_order);
+
   return (
     <Suspense fallback={<div className='min-h-[400px]' />}>
       <div className='relative mx-auto flex w-full max-w-5xl min-w-0 flex-col items-center overflow-x-hidden px-4 pt-16 pb-0 sm:px-6 sm:pt-20 md:px-12 md:pt-24'>
-        {isEnabled('about') && <AboutMe />}
-        {isEnabled('experience') && <Experience />}
-        {isEnabled('contributions') && <Contributions />}
-        {isEnabled('projects') && <Projects />}
+        {enabledOrdered.map((section, i) => {
+          const index = String(i + 1).padStart(2, '0');
+          switch (section.key) {
+            case 'about':
+              return <AboutMe key="about" sectionIndex={index} />;
+            case 'experience':
+              return <Experience key="experience" sectionIndex={index} />;
+            case 'contributions':
+              return <Contributions key="contributions" sectionIndex={index} />;
+            case 'projects':
+              return <Projects key="projects" sectionIndex={index} />;
+            default:
+              return null;
+          }
+        })}
         <div
           className="absolute inset-x-0 bottom-0 h-48 sm:h-64 md:h-80 pointer-events-none content-to-footer-fade"
           aria-hidden

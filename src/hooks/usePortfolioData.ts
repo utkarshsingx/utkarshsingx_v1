@@ -86,9 +86,12 @@ export function usePortfolioData() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetch = useCallback(async () => {
-    setLoading(true);
-    setError(null);
+  const fetch = useCallback(async (opts?: { silent?: boolean }) => {
+    const silent = opts?.silent ?? false;
+    if (!silent) {
+      setLoading(true);
+      setError(null);
+    }
     try {
       const [aboutRes, expRes, projRes, contactRes, linksRes, resumeRes, sectionsRes] = await Promise.all([
         supabase.from('about_me').select('*').order('updated_at', { ascending: false }).limit(1).maybeSingle(),
@@ -118,10 +121,14 @@ export function usePortfolioData() {
         siteSections: (sectionsRes.data || []) as SiteSectionRow[]
       });
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Failed to fetch portfolio data');
-      setData(initialData);
+      if (silent) {
+        console.error('Refetch failed:', e);
+      } else {
+        setError(e instanceof Error ? e.message : 'Failed to fetch portfolio data');
+        setData(initialData);
+      }
     } finally {
-      setLoading(false);
+      if (!silent) setLoading(false);
     }
   }, []);
 
@@ -129,5 +136,6 @@ export function usePortfolioData() {
     fetch();
   }, [fetch]);
 
-  return { data, loading, error, refetch: fetch };
+  const refetch = useCallback(() => fetch({ silent: true }), [fetch]);
+  return { data, loading, error, refetch };
 }
