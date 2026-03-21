@@ -42,8 +42,8 @@ const AdminLogin: React.FC = () => {
       </div>
 
       {/* Center content */}
-      <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-4 sm:px-6 text-center">
-        <div className="flex flex-col items-center gap-8 p-10 sm:p-12 rounded-2xl border border-slate-600/40 bg-slate-900/60 backdrop-blur-xl shadow-2xl shadow-black/30 max-w-md w-full">
+      <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-4 sm:px-6 py-6 text-center">
+        <div className="flex flex-col items-center gap-6 sm:gap-8 p-6 sm:p-12 rounded-2xl border border-slate-600/40 bg-slate-900/60 backdrop-blur-xl shadow-2xl shadow-black/30 max-w-md w-full mx-2 sm:mx-0">
           <div className="flex flex-col gap-2">
             <div className="min-h-[3.5rem] flex items-center justify-center overflow-visible">
               <GlitchText speed={0.8} enableShadows enableOnHover={false} className="text-off_white text-2xl sm:text-3xl font-bold">
@@ -62,7 +62,7 @@ const AdminLogin: React.FC = () => {
           />
           <button
             onClick={() => signInWithGoogle()}
-            className="group flex items-center justify-center gap-3 w-full px-6 py-4 rounded-xl bg-white hover:bg-slate-50 text-slate-800 font-medium transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]"
+            className="group flex items-center justify-center gap-3 w-full min-h-[48px] px-6 py-4 rounded-xl bg-white hover:bg-slate-50 text-slate-800 font-medium text-base transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] touch-manipulation"
           >
             <svg className="w-6 h-6 shrink-0" viewBox="0 0 24 24">
               <path

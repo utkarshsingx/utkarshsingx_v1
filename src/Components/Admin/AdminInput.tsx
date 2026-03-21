@@ -23,7 +23,7 @@ const AdminInput = forwardRef<HTMLInputElement, AdminInputProps>(
           ref={ref}
           id={inputId}
           className={`
-            w-full rounded-lg border border-slate-600 bg-slate-800 px-4 py-2.5 text-lightest_slate
+            w-full rounded-lg border border-slate-600 bg-slate-800 px-4 py-3 sm:py-2.5 text-base sm:text-sm text-lightest_slate
             placeholder:text-slate-500
             transition-all duration-200 ease-out
             focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50

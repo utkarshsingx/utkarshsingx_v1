@@ -32,7 +32,7 @@ const AdminSaveButton: React.FC<AdminSaveButtonProps> = ({
       disabled={isDisabled}
       whileHover={!isDisabled ? { scale: 1.02 } : undefined}
       whileTap={!isDisabled ? { scale: 0.98 } : undefined}
-      className={`group relative flex items-center justify-center gap-2 overflow-hidden rounded-xl border border-primary/40 bg-primary/10 px-5 py-2.5 font-medium text-primary transition-colors hover:border-primary/60 hover:bg-primary/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:scale-100 ${
+      className={`group relative flex items-center justify-center gap-2 overflow-hidden rounded-xl border border-primary/40 bg-primary/10 px-6 py-3 sm:px-5 sm:py-2.5 min-h-[44px] sm:min-h-0 font-medium text-primary transition-colors hover:border-primary/60 hover:bg-primary/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:scale-100 touch-manipulation ${
         success ? 'border-green-500/60 bg-green-500/20 text-green-400' : ''
       } ${className}`}
     >

@@ -138,16 +138,16 @@ const AdminLayoutInner: React.FC = () => {
             </div>
           </header>
         )}
-        <main className="flex-1 relative px-4 sm:px-6 py-6 sm:py-10 pt-44 sm:pt-52 md:pt-60 lg:pt-64 pb-16 sm:pb-20 overflow-x-hidden flex flex-col items-center text-center z-10" data-admin>
+        <main className="flex-1 relative px-4 sm:px-6 py-4 sm:py-10 pt-24 sm:pt-52 md:pt-60 lg:pt-64 pb-20 sm:pb-20 overflow-x-hidden flex flex-col items-center text-center z-10" data-admin>
           <div className="relative z-10 w-full max-w-6xl flex flex-col items-center text-center min-w-0">
             <Outlet />
           </div>
         </main>
         {/* Bottom footer: Sign out (left), Email (right) - aligned on mobile */}
-        <div className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-between gap-3 px-4 sm:px-6 py-4 sm:py-5 pb-[max(1rem,env(safe-area-inset-bottom))] bg-background/80 backdrop-blur-sm sm:bg-transparent sm:backdrop-blur-none transition-all duration-300 ease-out">
+        <div className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-between gap-3 px-4 sm:px-6 py-3 sm:py-5 pb-[max(1rem,env(safe-area-inset-bottom))] bg-background/80 backdrop-blur-sm sm:bg-transparent sm:backdrop-blur-none transition-all duration-300 ease-out">
           <button
             onClick={() => signOut()}
-            className="flex shrink-0 items-center gap-2 rounded-lg px-3 py-2 text-sm text-lightest_slate hover:bg-slate-700/30 hover:text-red-400 transition-colors touch-manipulation"
+            className="flex shrink-0 items-center gap-2 rounded-lg px-4 py-3 sm:px-3 sm:py-2 min-h-[44px] sm:min-h-0 text-sm text-lightest_slate hover:bg-slate-700/30 hover:text-red-400 transition-colors touch-manipulation -my-1 sm:my-0"
           >
             <FiLogOut size={16} />
             <GlitchText speed={0.4} enableShadows enableOnHover className="!text-sm !font-normal !mx-0 text-lightest_slate">
@@ -156,7 +156,7 @@ const AdminLayoutInner: React.FC = () => {
           </button>
           {user?.email && (
             <div className="min-w-0 flex-1 flex justify-end">
-              <GlitchText speed={0.4} enableShadows enableOnHover className="!text-xs sm:!text-sm !font-normal !mx-0 text-lightest_slate truncate block max-w-full text-right">
+              <GlitchText speed={0.4} enableShadows enableOnHover className="!text-xs sm:!text-sm !font-normal !mx-0 text-lightest_slate truncate block max-w-[140px] sm:max-w-[220px] text-right">
                 {user.email}
               </GlitchText>
             </div>

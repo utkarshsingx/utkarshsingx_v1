@@ -116,13 +116,13 @@ const AboutMeAdmin: React.FC = () => {
         />
         <div>
           <label className="block text-sm font-medium text-slate-400 mb-1.5">Tech list</label>
-          <div className="flex gap-2 mb-2 justify-center">
+          <div className="flex flex-wrap gap-2 mb-2 justify-center">
             <AdminInput
               value={techInput}
               onChange={(e) => setTechInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addTech())}
               placeholder="Add tech"
-              className="flex-1"
+              className="flex-1 min-w-[140px]"
             />
             <AdminAddButton onClick={addTech} label="Add" />
           </div>

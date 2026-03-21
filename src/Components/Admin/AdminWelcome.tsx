@@ -55,7 +55,7 @@ const AdminWelcome: React.FC = () => {
                   hoverIntensity={0.5}
                   enableHover
                   color="#64ffda"
-                  fontSize="clamp(2rem, 8vw, 6rem)"
+                  fontSize="clamp(3rem, 14vw, 6rem)"
                 >
                   Hey Chief!
                 </FuzzyText>
@@ -73,7 +73,7 @@ const AdminWelcome: React.FC = () => {
                   hoverIntensity={0.5}
                   enableHover
                   color="#64ffda"
-                  fontSize="clamp(2rem, 8vw, 6rem)"
+                  fontSize="clamp(3rem, 14vw, 6rem)"
                 >
                   Welcome back &lt;3
                 </FuzzyText>

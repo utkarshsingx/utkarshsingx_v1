@@ -17,13 +17,13 @@ const AdminCheckbox: React.FC<AdminCheckboxProps> = ({
   return (
     <label
       htmlFor={inputId}
-      className="flex items-center gap-3 cursor-pointer group"
+      className="flex items-center gap-3 cursor-pointer group min-h-[44px] sm:min-h-0 py-2 sm:py-0 -my-2 sm:my-0"
     >
       <input
         type="checkbox"
         id={inputId}
         className={`
-          h-4 w-4 rounded border-slate-600 bg-slate-800/50 text-primary
+          h-5 w-5 sm:h-4 sm:w-4 rounded border-slate-600 bg-slate-800/50 text-primary shrink-0
           focus:ring-2 focus:ring-primary/50 focus:ring-offset-0 focus:ring-offset-transparent
           transition-colors cursor-pointer
           ${className}

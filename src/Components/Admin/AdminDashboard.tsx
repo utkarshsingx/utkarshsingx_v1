@@ -49,7 +49,7 @@ const AdminDashboard: React.FC = () => {
           <Link
             key={to}
             to={to}
-            className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 rounded-lg border border-slate-700/50 bg-slate-800/30 hover:border-primary/50 hover:bg-slate-800/50 transition-colors group"
+            className="flex items-start gap-3 sm:gap-4 p-4 sm:p-4 min-h-[72px] sm:min-h-0 rounded-lg border border-slate-700/50 bg-slate-800/30 hover:border-primary/50 hover:bg-slate-800/50 active:bg-slate-800/50 transition-colors group touch-manipulation"
           >
             <div className="p-2 rounded-lg bg-primary/20 text-primary shrink-0">
               <Icon size={24} />

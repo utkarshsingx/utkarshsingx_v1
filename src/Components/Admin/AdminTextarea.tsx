@@ -23,7 +23,7 @@ const AdminTextarea = forwardRef<HTMLTextAreaElement, AdminTextareaProps>(
           ref={ref}
           id={textareaId}
           className={`
-            w-full rounded-lg border border-slate-600 bg-slate-800 px-4 py-3 text-lightest_slate font-mono text-sm
+            w-full rounded-lg border border-slate-600 bg-slate-800 px-4 py-3 text-lightest_slate font-mono text-base sm:text-sm
             placeholder:text-slate-500
             transition-all duration-200 ease-out
             focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50

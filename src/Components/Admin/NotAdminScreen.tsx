@@ -34,7 +34,7 @@ const NotAdminScreen: React.FC = () => {
               hoverIntensity={0.5}
               enableHover
               color="#ff6b6b"
-              fontSize="clamp(2.5rem, 8vw, 5rem)"
+              fontSize="clamp(3rem, 14vw, 5rem)"
             >
               Hey Stranger!
             </FuzzyText>
@@ -43,7 +43,7 @@ const NotAdminScreen: React.FC = () => {
               hoverIntensity={0.5}
               enableHover
               color="#ff6b6b"
-              fontSize="clamp(2rem, 6vw, 4rem)"
+              fontSize="clamp(2.5rem, 10vw, 4rem)"
             >
               You're not chief!
             </FuzzyText>

@@ -163,7 +163,7 @@ const SectionsAdmin: React.FC = () => {
               onDragOver={handleDragOver}
               onDrop={(e) => handleDrop(e, index)}
               onDragEnd={handleDragEnd}
-              className={`flex items-center gap-3 rounded-lg border px-4 py-3 transition-all cursor-grab active:cursor-grabbing select-none ${
+              className={`flex items-center gap-3 rounded-lg border px-4 py-3 min-h-[52px] sm:min-h-0 transition-all cursor-grab active:cursor-grabbing select-none touch-manipulation ${
                 draggedId === s.id
                   ? 'border-primary/60 bg-primary/10 opacity-80'
                   : 'border-slate-700/50 bg-slate-800/30 hover:border-slate-600'
