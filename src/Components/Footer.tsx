@@ -53,6 +53,13 @@ const iconMap = {
   linkedin: FiLinkedin
 };
 
+function useContactSectionIndex(): string {
+  const { data } = usePortfolioDataContext();
+  const enabled = (data?.siteSections ?? []).filter((s) => s.enabled).sort((a, b) => a.sort_order - b.sort_order);
+  const idx = enabled.findIndex((s) => s.key === 'contact');
+  return idx >= 0 ? String(idx + 1).padStart(2, '0') : '05';
+}
+
 const Footer: React.FC = () => {
   const waveColor = useFooterWaveColor();
   const primaryColor = usePrimaryColor();
@@ -61,6 +68,7 @@ const Footer: React.FC = () => {
   const { data } = usePortfolioDataContext();
   const footerLinks = data.links.filter((l) => l.type !== 'email');
   const showContact = data.siteSections.find((s) => s.key === 'contact')?.enabled ?? true;
+  const contactSectionIndex = useContactSectionIndex();
 
   const handleBuiltByClick = () => {
     setShowSecretTerminal(true);
@@ -95,9 +103,9 @@ const Footer: React.FC = () => {
         <div className="absolute inset-0 footer-fade-gradient" />
       </div>
 
-      {/* What's Next - centered in footer */}
-      <div className="relative z-10 flex min-w-0 flex-col items-center justify-center w-full min-h-[280px] sm:min-h-[320px] md:min-h-[380px] lg:min-h-[420px] px-4 sm:px-6 py-10 sm:py-12 md:py-16">
-        {showContact && <Contact />}
+      {/* What's Next - same padding & width as main content for alignment */}
+      <div className="relative z-10 flex min-w-0 flex-col items-center justify-center w-full max-w-5xl mx-auto min-h-[280px] sm:min-h-[320px] md:min-h-[380px] lg:min-h-[420px] px-4 sm:px-6 md:px-12 py-10 sm:py-12 md:py-16">
+        {showContact && <Contact sectionIndex={contactSectionIndex} />}
       </div>
 
       {/* Built by - on wave background */}

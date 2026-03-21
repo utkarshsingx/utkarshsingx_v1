@@ -1,26 +1,27 @@
 import React from 'react';
-import Button from '@/ui/Button';
-import GlitchText from './GlitchText';
+import Button from '../ui/Button';
+import Heading from '../ui/Heading';
 import { usePortfolioDataContext } from '../context/PortfolioDataContext';
 
-const Contact: React.FC = () => {
+interface ContactProps {
+  sectionIndex?: string;
+}
+
+const Contact: React.FC<ContactProps> = ({ sectionIndex = '05' }) => {
   const { data } = usePortfolioDataContext();
   const contact = data.contact;
 
   if (!contact) return null;
 
   return (
-    <div className='text-center max-w-[720px] w-full min-w-0 flex flex-col items-center px-4 sm:px-6 py-5 sm:py-6 md:py-8 overflow-visible' id='contact'>
-      <div className='text-primary text-base sm:text-lg font-mono mb-2'>05. What&apos;s Next?</div>
-      <div className='min-h-[4rem] flex items-center justify-center overflow-visible'>
-        <GlitchText speed={1} enableShadows enableOnHover={false} className='text-off_white'>
-          {contact.section_title}
-        </GlitchText>
+    <div className='w-full min-w-0 flex flex-col items-center py-5 sm:py-6 md:py-8 overflow-visible' id='contact'>
+      <div className='w-full flex justify-center'>
+        <Heading index={sectionIndex} title={contact.section_title} />
       </div>
-      <div className='text-lightest_slate text-sm sm:text-base my-3 mb-6 sm:mb-8 md:mb-12'>
+      <div className='text-lightest_slate text-sm sm:text-base mt-4 sm:mt-6 mb-6 sm:mb-8 md:mb-12 max-w-[720px] w-full text-left'>
         {contact.body_text}
       </div>
-      <a href={contact.cta_url} target='_blank' rel='noreferrer'>
+      <a href={contact.cta_url} target='_blank' rel='noreferrer' className='mt-4'>
         <Button title={contact.cta_label} />
       </a>
     </div>
