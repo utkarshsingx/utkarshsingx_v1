@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { useAuth } from '../context/AuthContext';
 import TextType from './TextType';
@@ -80,6 +81,7 @@ interface SecretTerminalProps {
 
 export const SecretTerminal: React.FC<SecretTerminalProps> = ({ onClose }) => {
   const { signInWithGoogle } = useAuth();
+  const navigate = useNavigate();
   const [phase, setPhase] = useState<Phase>('boot');
   const [history, setHistory] = useState<
     { type: 'output' | 'input'; text: string; animated?: boolean; kind?: 'ghost' }[]
@@ -89,8 +91,6 @@ export const SecretTerminal: React.FC<SecretTerminalProps> = ({ onClose }) => {
   const [historyIndex, setHistoryIndex] = useState(-1);
   const outputEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-
-  const homieUrl = import.meta.env.VITE_HOMIE_REDIRECT_URL as string | undefined;
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -155,17 +155,16 @@ export const SecretTerminal: React.FC<SecretTerminalProps> = ({ onClose }) => {
         setTimeout(onClose, 1500);
       } else if (action === 'homie') {
         setPhase('homie');
-        const url = homieUrl?.trim() || 'https://github.com/utkarshsingx';
         setHistory((h) => [
           ...h,
           {
             type: 'output',
-            text: `> Establishing homie connection...\n> Opening homie zone at ${url}`,
+            text: `> Establishing homie connection...\n> Entering Git City...`,
             animated: true
           }
         ]);
-        window.open(url, '_blank');
-        setTimeout(onClose, 1200);
+        onClose();
+        navigate('/git-city');
       } else if (action === 'coffee') {
         setPhase('coffee');
         setHistory((h) => [
@@ -184,7 +183,7 @@ export const SecretTerminal: React.FC<SecretTerminalProps> = ({ onClose }) => {
         ]);
       }
     },
-    [homieUrl, onClose, signInWithGoogle]
+    [onClose, signInWithGoogle, navigate]
   );
 
   const addToCommandHistory = useCallback((cmd: string) => {
