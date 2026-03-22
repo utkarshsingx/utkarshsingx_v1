@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { useAuth } from '../context/AuthContext';
 import TextType from './TextType';
@@ -81,7 +80,6 @@ interface SecretTerminalProps {
 
 export const SecretTerminal: React.FC<SecretTerminalProps> = ({ onClose }) => {
   const { signInWithGoogle } = useAuth();
-  const navigate = useNavigate();
   const [phase, setPhase] = useState<Phase>('boot');
   const [history, setHistory] = useState<
     { type: 'output' | 'input'; text: string; animated?: boolean; kind?: 'ghost' }[]
@@ -159,12 +157,12 @@ export const SecretTerminal: React.FC<SecretTerminalProps> = ({ onClose }) => {
           ...h,
           {
             type: 'output',
-            text: `> Establishing homie connection...\n> Entering Git City...`,
+            text: `> Establishing homie connection...\n> Opening GitHub...`,
             animated: true
           }
         ]);
         onClose();
-        navigate('/git-city');
+        window.open('https://github.com/utkarshsingx', '_blank', 'noopener,noreferrer');
       } else if (action === 'coffee') {
         setPhase('coffee');
         setHistory((h) => [
@@ -183,7 +181,7 @@ export const SecretTerminal: React.FC<SecretTerminalProps> = ({ onClose }) => {
         ]);
       }
     },
-    [onClose, signInWithGoogle, navigate]
+    [onClose, signInWithGoogle]
   );
 
   const addToCommandHistory = useCallback((cmd: string) => {

@@ -25,8 +25,6 @@ const Experience = lazy(() => import('./Components/Experience'));
 const Contributions = lazy(() => import('./Components/Contributions'));
 const Projects = lazy(() => import('./Components/Projects'));
 const Footer = lazy(() => import('./Components/Footer'));
-const GitCityPage = lazy(() => import('./pages/GitCityPage'));
-
 const SECTION_KEYS = ['about', 'experience', 'contributions', 'projects'] as const;
 
 function HomePageContent() {
@@ -96,7 +94,6 @@ function App() {
       <div className='custom-scrollbar'>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/git-city" element={<Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-[var(--theme-bg)]"><p className="font-mono text-lightest_slate">Loading Git City...</p></div>}><GitCityPage /></Suspense>} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminDashboard />} />
