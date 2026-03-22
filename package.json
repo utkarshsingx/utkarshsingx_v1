@@ -9,6 +9,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@fontsource/jetbrains-mono": "^5.0.0",
     "@gsap/react": "^2.1.2",
+    "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^8.15.12",
     "@react-three/postprocessing": "^2.19.1",
     "@supabase/supabase-js": "^2.99.3",
